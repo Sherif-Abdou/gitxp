@@ -26,6 +26,7 @@ export default [
       "semi": [
         "error", "always"
       ],
+      "react/react-in-jsx-scope": "off" // Disable outdated rule
     },
   },
 ];
