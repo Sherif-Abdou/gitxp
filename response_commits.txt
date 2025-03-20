@@ -1,0 +1,125 @@
+{
+    "sha": "6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+    "node_id": "C_kwDON9b2L9oAKDZhNWE0NjIyNDY1MjQ0YjExOGMxZThkMGI0YWU3MGNmMDI3ZTQ2Nzg",
+    "commit": {
+        "author": {
+            "name": "D-G Singla",
+            "email": "dsingla340@gmail.com",
+            "date": "2025-02-21T19:49:37Z"
+        },
+        "committer": {
+            "name": "D-G Singla",
+            "email": "dsingla340@gmail.com",
+            "date": "2025-02-21T19:49:37Z"
+        },
+        "message": "Added old files",
+        "tree": {
+            "sha": "6da9a1aa1f51a575c8ab73834395be768fd40883",
+            "url": "https://api.github.com/repos/danushsingla/RL_MIL/git/trees/6da9a1aa1f51a575c8ab73834395be768fd40883"
+        },
+        "url": "https://api.github.com/repos/danushsingla/RL_MIL/git/commits/6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+        "comment_count": 0,
+        "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+        }
+    },
+    "url": "https://api.github.com/repos/danushsingla/RL_MIL/commits/6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+    "html_url": "https://github.com/danushsingla/RL_MIL/commit/6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+    "comments_url": "https://api.github.com/repos/danushsingla/RL_MIL/commits/6a5a4622465244b118c1e8d0b4ae70cf027e4678/comments",
+    "author": {
+        "login": "danushsingla",
+        "id": 139186991,
+        "node_id": "U_kgDOCEvTLw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/139186991?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/danushsingla",
+        "html_url": "https://github.com/danushsingla",
+        "followers_url": "https://api.github.com/users/danushsingla/followers",
+        "following_url": "https://api.github.com/users/danushsingla/following{/other_user}",
+        "gists_url": "https://api.github.com/users/danushsingla/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/danushsingla/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/danushsingla/subscriptions",
+        "organizations_url": "https://api.github.com/users/danushsingla/orgs",
+        "repos_url": "https://api.github.com/users/danushsingla/repos",
+        "events_url": "https://api.github.com/users/danushsingla/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/danushsingla/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+    },
+    "committer": {
+        "login": "danushsingla",
+        "id": 139186991,
+        "node_id": "U_kgDOCEvTLw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/139186991?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/danushsingla",
+        "html_url": "https://github.com/danushsingla",
+        "followers_url": "https://api.github.com/users/danushsingla/followers",
+        "following_url": "https://api.github.com/users/danushsingla/following{/other_user}",
+        "gists_url": "https://api.github.com/users/danushsingla/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/danushsingla/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/danushsingla/subscriptions",
+        "organizations_url": "https://api.github.com/users/danushsingla/orgs",
+        "repos_url": "https://api.github.com/users/danushsingla/repos",
+        "events_url": "https://api.github.com/users/danushsingla/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/danushsingla/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+    },
+    "parents": [
+        {
+            "sha": "5334708b80e151715d1a3f9a603b7d72f8dde478",
+            "url": "https://api.github.com/repos/danushsingla/RL_MIL/commits/5334708b80e151715d1a3f9a603b7d72f8dde478",
+            "html_url": "https://github.com/danushsingla/RL_MIL/commit/5334708b80e151715d1a3f9a603b7d72f8dde478"
+        }
+    ],
+    "stats": {
+        "total": 371,
+        "additions": 371,
+        "deletions": 0
+    },
+    "files": [
+        {
+            "sha": "ab982b6341b65a77ad453e28321d72228878dc73",
+            "filename": "old/PongGame.py",
+            "status": "added",
+            "additions": 149,
+            "deletions": 0,
+            "changes": 149,
+            "blob_url": "https://github.com/danushsingla/RL_MIL/blob/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2FPongGame.py",
+            "raw_url": "https://github.com/danushsingla/RL_MIL/raw/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2FPongGame.py",
+            "contents_url": "https://api.github.com/repos/danushsingla/RL_MIL/contents/old%2FPongGame.py?ref=6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+            "patch": "@@ -0,0 +1,149 @@\n+# Import required library\n+import turtle\n+import gym\n+from stable_baselines3 import PPO\n+import numpy as np\n+import gym_envs\n+\n+# Create screen\n+sc = turtle.Screen()\n+sc.title(\"Pong game\")\n+sc.bgcolor(\"white\")\n+sc.setup(width=1000, height=600)\n+\n+# Left paddle\n+left_pad = turtle.Turtle()\n+left_pad.speed(0)\n+left_pad.shape(\"square\")\n+left_pad.color(\"black\")\n+left_pad.shapesize(stretch_wid=6, stretch_len=2)\n+left_pad.penup()\n+left_pad.goto(-400, 0)\n+\n+# Right paddle\n+right_pad = turtle.Turtle()\n+right_pad.speed(0)\n+right_pad.shape(\"square\")\n+right_pad.color(\"black\")\n+right_pad.shapesize(stretch_wid=6, stretch_len=2)\n+right_pad.penup()\n+right_pad.goto(400, 0)\n+\n+# Ball of circle shape\n+hit_ball = turtle.Turtle()\n+hit_ball.speed(40)\n+hit_ball.shape(\"circle\")\n+hit_ball.color(\"blue\")\n+hit_ball.penup()\n+hit_ball.goto(0, 0)\n+hit_ball.dx = 5\n+hit_ball.dy = -5\n+\n+# Initialize the score\n+left_player = 0\n+right_player = 0\n+\n+# Displays the score\n+sketch = turtle.Turtle()\n+sketch.speed(0)\n+sketch.color(\"blue\")\n+sketch.penup()\n+sketch.hideturtle()\n+sketch.goto(0, 260)\n+sketch.write(\"Left_player : 0 Right_player: 0\",\n+             align=\"center\", font=(\"Courier\", 24, \"normal\"))\n+\n+\n+# Functions to move paddle vertically\n+def paddleaup():\n+    y = left_pad.ycor()\n+    y += 20\n+    left_pad.sety(y)\n+\n+\n+def paddleadown():\n+    y = left_pad.ycor()\n+    y -= 20\n+    left_pad.sety(y)\n+\n+\n+def paddlebup():\n+    y = right_pad.ycor()\n+    y += 20\n+    right_pad.sety(y)\n+\n+\n+def paddlebdown():\n+    y = right_pad.ycor()\n+    y -= 20\n+    right_pad.sety(y)\n+\n+\n+# Keyboard bindings\n+sc.listen()\n+sc.onkeypress(paddleaup, \"Up\")\n+sc.onkeypress(paddleadown, \"Down\")\n+\n+env = gym.make('gym_envs/PongGame', render_mode='human')\n+model = PPO.load(\"PongGame_model\", env=env, verbose=1)\n+\n+while True:\n+    sc.update()\n+\n+    hit_ball.setx(hit_ball.xcor() + hit_ball.dx)\n+    hit_ball.sety(hit_ball.ycor() + hit_ball.dy)\n+\n+    obs = {\"paddle\": np.array([right_pad.xcor(), right_pad.ycor()]),\n+           \"ball\": np.array([hit_ball.xcor(), hit_ball.ycor()])}\n+    action, state = model.predict(obs)\n+\n+    if action == 0:\n+        paddlebup()\n+    elif action == 1:\n+        paddlebdown()\n+    elif action == 2:\n+        pass\n+\n+    # Checking borders\n+    if hit_ball.ycor() > 280:\n+        hit_ball.sety(280)\n+        hit_ball.dy *= -1\n+\n+    if hit_ball.ycor() < -280:\n+        hit_ball.sety(-280)\n+        hit_ball.dy *= -1\n+\n+    if right_pad.ycor() < -230:\n+        right_pad.sety(-230)\n+\n+    if right_pad.ycor() > 230:\n+        right_pad.sety(230)\n+\n+    if hit_ball.xcor() > 500:\n+        hit_ball.goto(0, 0)\n+        hit_ball.dy *= -1\n+        left_player += 1\n+        sketch.clear()\n+        sketch.write(\"Left_player : {} Right_player: {}\".format(\n+            left_player, right_player), align=\"center\",\n+            font=(\"Courier\", 24, \"normal\"))\n+\n+    if hit_ball.xcor() < -500:\n+        hit_ball.goto(0, 0)\n+        hit_ball.dy *= -1\n+        right_player += 1\n+        sketch.clear()\n+        sketch.write(\"Left_player : {} Right_player: {}\".format(\n+            left_player, right_player), align=\"center\",\n+            font=(\"Courier\", 24, \"normal\"))\n+\n+    # Paddle ball collision\n+    if (hit_ball.xcor() > 355 and hit_ball.xcor() < 375) and (hit_ball.ycor() < right_pad.ycor() + 60 and\n+         hit_ball.ycor() > right_pad.ycor() - 60):\n+        hit_ball.setx(355)\n+        hit_ball.dx *= -1\n+\n+    if (hit_ball.xcor() < -355 and hit_ball.xcor() > -375) and (hit_ball.ycor() < left_pad.ycor() + 60 and\n+         hit_ball.ycor() > left_pad.ycor() - 60):\n+        hit_ball.setx(-355)\n+        hit_ball.dx *= -1"
+        },
+        {
+            "sha": "bd32ef9ffe5c66362a7c870e2195e89b1a180065",
+            "filename": "old/pong_env.py",
+            "status": "added",
+            "additions": 192,
+            "deletions": 0,
+            "changes": 192,
+            "blob_url": "https://github.com/danushsingla/RL_MIL/blob/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2Fpong_env.py",
+            "raw_url": "https://github.com/danushsingla/RL_MIL/raw/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2Fpong_env.py",
+            "contents_url": "https://api.github.com/repos/danushsingla/RL_MIL/contents/old%2Fpong_env.py?ref=6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+            "patch": "@@ -0,0 +1,192 @@\n+# Revised to only have right paddle\n+\n+import gym\n+from gym import spaces\n+import turtle\n+import numpy as np\n+import random\n+import time\n+\n+class PongEnv(gym.Env):\n+    metadata = {'render_modes': ['human']}\n+\n+    def __init__(self, render_mode=\"human\"):\n+        # print(\"Environment initialized\")\n+        self.width = 1000\n+        self.height = 600\n+        self.hitPaddle = False\n+\n+        self.observation_space = spaces.Dict({\n+            'paddle': spaces.Box(-self.height, self.height, shape=(2,)),\n+            'ball': spaces.Box(-self.width, self.width, shape=(2,))\n+        })\n+\n+        self.action_space = spaces.Discrete(3)\n+        self.sketch = None\n+        self.setup = True\n+\n+        self._action_to_direction = {\n+            0: np.array([0, 20]),\n+            1: np.array([0, -20]),\n+            2: np.array([0, 0]),\n+        }\n+\n+        assert render_mode is None or render_mode in self.metadata[\"render_modes\"]\n+        self.render_mode = render_mode\n+\n+    def _get_obs(self):\n+        return {\"paddle\": self._paddle_location, \"ball\": self._ball_location}\n+\n+    def _get_info(self):\n+        return {\"hitPaddle\": self.hitPaddle}\n+\n+    def reset(self, seed=None, options=None):\n+        super().reset(seed=seed)\n+\n+        if self.sketch is not None:\n+            self.sketch.clear()\n+\n+        self._paddle_location = np.array([400, 0])\n+        self._ball_location = np.array([0, 0])\n+        self.hitPaddle = False\n+        self.hits = 0\n+\n+        observation = self._get_obs()\n+        info = self._get_info()\n+\n+        # Set up the screen\n+        if self.setup:\n+            self._setup_render_frame()\n+            self.setup = False\n+\n+        # Change velocity of ball every reset\n+        self.hit_ball.dx = random.uniform(7, 15)\n+        self.hit_ball.dy = - random.uniform(5, 15)\n+\n+        # Initialize paddle and ball locations in render frame\n+        if self.render_mode == \"human\":\n+            self._render_frame()\n+\n+        return observation, info\n+\n+    def step(self, action):\n+        # Perform action and update vector\n+        direction = self._action_to_direction[action]\n+        self._paddle_location = self._paddle_location + direction\n+\n+        # Update paddle location in frame (only has to change y since x always remains unchanged for the paddle)\n+        self.right_pad.sety(self._paddle_location[1])\n+\n+        # If the ball reaches the right end of the screen or game runtime is more than 30 seconds then terminate\n+        terminated = False\n+        if self._ball_location[0] > 500:\n+            terminated = True\n+\n+        # Reward is 1 if the ball hits the paddle, 0 otherwise\n+        reward = 1 if (360 < self._ball_location[0] < 370) and \\\n+                     (self._paddle_location[1] + 40 > self._ball_location[1] > self._paddle_location[1] - 40) else 0\n+\n+        # Returns the locations of the paddle and the ball (observations of the environment)\n+        observation = self._get_obs()\n+        info = self._get_info()\n+\n+        # If the render mode is human then run the turtle frame\n+        if self.render_mode == \"human\":\n+            self._render_frame()\n+        return observation, reward, terminated, False, info\n+\n+    def render(self):\n+        return self._render_frame()\n+\n+    def _setup_render_frame(self):\n+        # Create screen\n+        self.sc = turtle.Screen()\n+        self.sc.title(\"Pong game\")\n+        self.sc.bgcolor(\"white\")\n+        self.sc.setup(width=self.width, height=self.height)\n+\n+        # Right paddle\n+        self.right_pad = turtle.Turtle()\n+        self.right_pad.speed(0)\n+        self.right_pad.shape(\"square\")\n+        self.right_pad.color(\"black\")\n+        self.right_pad.shapesize(stretch_wid=6, stretch_len=2)\n+        self.right_pad.penup()\n+        self.right_pad.goto(self._paddle_location[0], self._paddle_location[1])\n+\n+        # Ball of circle shape\n+        self.hit_ball = turtle.Turtle()\n+        self.hit_ball.speed(40)\n+        self.hit_ball.shape(\"circle\")\n+        self.hit_ball.color(\"blue\")\n+        self.hit_ball.penup()\n+        self.hit_ball.goto(self._ball_location[0], self._ball_location[1])\n+        self.hit_ball.dx = random.uniform(7, 15) # 5\n+        self.hit_ball.dy = - random.uniform(5, 15)  # -5\n+\n+        # Initialize the score\n+        self.hits = 0\n+\n+        # Displays the score\n+        self.sketch = turtle.Turtle()\n+        self.sketch.speed(0)\n+        self.sketch.color(\"blue\")\n+        self.sketch.penup()\n+        self.sketch.hideturtle()\n+        self.sketch.goto(0, 260)\n+        self.sketch.write(f\"Hits: {self.hits}\",\n+                     align=\"center\", font=(\"Courier\", 24, \"normal\"))\n+\n+    def _render_frame(self):\n+        # Updates the screen very frame\n+        self.sc.update()\n+\n+        # Sets the new coordinates of the ball based on its velocity\n+        self.hit_ball.setx(self.hit_ball.xcor() + self.hit_ball.dx)\n+        self.hit_ball.sety(self.hit_ball.ycor() + self.hit_ball.dy)\n+\n+        # Sets the new coordinates of the paddle based on the action performed\n+        self.right_pad.sety(self._paddle_location[1])\n+\n+        # Update ball location in frame\n+        self._ball_location = np.array([self.hit_ball.xcor(), self.hit_ball.ycor()])\n+\n+        # Checking borders\n+        if self.hit_ball.ycor() > 280:\n+            self.hit_ball.sety(280)\n+            self.hit_ball.dy *= -1\n+\n+        if self.hit_ball.ycor() < -280:\n+            self.hit_ball.sety(-280)\n+            self.hit_ball.dy *= -1\n+\n+        if self.hit_ball.xcor() < -500:\n+            self.hit_ball.setx(-500)\n+            self.hit_ball.dx *= -1\n+\n+        if self.right_pad.ycor() < -230:\n+            self._paddle_location[1] = -230\n+            self.right_pad.sety(-230)\n+\n+        if self.right_pad.ycor() > 230:\n+            self._paddle_location[1] = 230\n+            self.right_pad.sety(230)\n+\n+        # If the ball misses the paddle, then reset the ball\n+        if self.hit_ball.xcor() > 500:\n+            self.hit_ball.goto(0, 0)\n+            self.hit_ball.dy *= -1\n+\n+        # Paddle ball collision and updating score\n+        if (self.hit_ball.xcor() > 355 and self.hit_ball.xcor() < 375) and (self.hit_ball.ycor() < self.right_pad.ycor() + 60 and\n+             self.hit_ball.ycor() > self.right_pad.ycor() - 60):\n+            self.hitPaddle = True\n+            self.sketch.clear()\n+            self.hit_ball.setx(355)\n+            self.hit_ball.dx *= -1\n+            self.hits += 1\n+\n+        # Update the scoreboard\n+        self.sketch.write(f\"Hits: {self.hits}\",\n+                          align=\"center\", font=(\"Courier\", 24, \"normal\"))\n+"
+        },
+        {
+            "sha": "3cff8a570b2b35c76981640f49779a615e78f081",
+            "filename": "old/run_baseline.py",
+            "status": "added",
+            "additions": 30,
+            "deletions": 0,
+            "changes": 30,
+            "blob_url": "https://github.com/danushsingla/RL_MIL/blob/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2Frun_baseline.py",
+            "raw_url": "https://github.com/danushsingla/RL_MIL/raw/6a5a4622465244b118c1e8d0b4ae70cf027e4678/old%2Frun_baseline.py",
+            "contents_url": "https://api.github.com/repos/danushsingla/RL_MIL/contents/old%2Frun_baseline.py?ref=6a5a4622465244b118c1e8d0b4ae70cf027e4678",
+            "patch": "@@ -0,0 +1,30 @@\n+import gym\n+import gym_envs\n+from stable_baselines3 import PPO\n+from stable_baselines3.common.vec_env import SubprocVecEnv\n+from stable_baselines3.common.utils import set_random_seed\n+\n+\n+def make_env(env_id, rank, seed=0):\n+    def _init():\n+        env = gym.make(env_id)\n+        env.reset(seed=seed + rank)\n+        return env\n+\n+    set_random_seed(seed)\n+    return _init\n+\n+if __name__ == '__main__':\n+    num_cpu = 1  # Number of processes to use\n+\n+    # env = gym.make('gym_envs/PongGame', render_mode='human')\n+    env = SubprocVecEnv([make_env(\"gym_envs/PongGame\", i) for i in range(num_cpu)])\n+    # model = PPO('MultiInputPolicy', env, verbose=1)\n+    model = PPO.load(\"PongGame_model\", env=env, verbose=1)\n+\n+    print('Training model...')\n+    model.learn(total_timesteps=50000)\n+    print('Training complete!')\n+\n+    model.save(\"PongGame_model\")\n+    print('Model saved!')"
+        }
+    ]
+}
