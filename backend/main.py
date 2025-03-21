@@ -22,7 +22,7 @@ app = create_app()
 # Query point sources for the user and the repository
 def find_point_sources_for(user, repository=None):
     engine = db_engine
-    with Session(engine) as session:
+    with Session(engine, expire_on_commit=False) as session:
         stmt = select(PointSource).join(PointSource.user).join(PointSource.repo).where(User.name == user)
         if repository is not None:
             stmt = stmt.where(Repository.name == repository)
@@ -43,7 +43,21 @@ def find_repositories_for(user):
 def hello_world():
     return "<p>Hello</p>"
 
-@app.route("/users/<username>/points", methods=['GET'])
+@app.route("/users/<username>/point_list", methods=['GET'])
+def get_point_sources(username):
+    point_sources = find_point_sources_for(username)
+    table = [
+            {"points": item[0].points, 
+             "point_type": item[0].point_type,
+             "repository": item[0].repo.name
+             } for item in point_sources]
+    response = Response(json.dumps(table))
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
+    return response
+    
+
+@app.route("/users/<username>/total_points", methods=['GET'])
 def get_user_points(username):
     point_sources = find_point_sources_for(username)
 

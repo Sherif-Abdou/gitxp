@@ -52,7 +52,7 @@ def time_attentuation(days):
 def calculate_points(point_sources: Iterable[PointSource]):
     total_points = 0
     for source in point_sources:
-        attentuation = time_attentuation(source.time)
+        attentuation = time_attentuation(days_since(source.time))
         total_points += source.points * attentuation
     return total_points
 
