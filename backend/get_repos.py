@@ -1,8 +1,13 @@
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
+# load environment variables
+load_dotenv()
 
 url = "https://api.github.com/users/danushsingla/repos"
-headers = {"Authorization": "token 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"}
+headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
 
 response = requests.get(url, headers=headers)
 data = response.json()
