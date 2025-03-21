@@ -35,14 +35,20 @@ class Repository(Base):
 class PointSource(Base):
     __tablename__ = "points"
 
+    # Primary key of the point source
     id: Mapped[int] = mapped_column(primary_key=True)
+    # Number of points this was originally worth, not including attentuation
     points: Mapped[int] = mapped_column(Integer())
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
-    repo_id: Mapped[int] = mapped_column(ForeignKey("repositories.id"))
+    # Description of the way points were earned
+    point_type: Mapped[str] = mapped_column(String(30))
+    # Time when the point event occured
     time: Mapped[datetime] = mapped_column(DateTime(), server_default = sqlalchemy.func.now())
 
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
+    repo_id: Mapped[int] = mapped_column(ForeignKey("repositories.id"))
+
     user: Mapped["User"] = relationship(back_populates="points")
-    repo: Mapped["Repository"] = relationship()
+    repo: Mapped["Repository"] = relationship(lazy='subquery')
 
 # Populates some fake points entries in the database
 def populate_points_for(engine, user_id, repo_id):
@@ -50,11 +56,13 @@ def populate_points_for(engine, user_id, repo_id):
     with Session(engine) as session:
         point_source_a = PointSource(
                 points = 5,
+                point_type = "Commit",
                 user_id = user_id,
                 repo_id = repo_id,
                 )
         point_source_b = PointSource(
                 points = 5,
+                point_type = "Commit",
                 user_id = user_id,
                 repo_id = repo_id,
                 )
@@ -71,7 +79,7 @@ def init_db():
 
 if __name__ == "__main__":
     engine = init_db()
-    # Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     populate_points_for(engine, 1, 1)
 
 
