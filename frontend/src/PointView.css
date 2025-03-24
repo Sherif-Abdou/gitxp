@@ -1,0 +1,37 @@
+.point_view {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0rem 1rem;
+}
+.point_view > tr > th {
+    /* font-family: Roberto, sans-serif; */
+    font-size: 1.25rem;
+    padding: 1em;
+}
+
+.point_item {
+    /* display: flex; */
+    /* flex-direction: row; */
+}
+
+.point_number {
+    display: table-cell;
+    background-color: #90EE90;
+    color: black;
+    padding: 0.5em;
+}
+
+.point_type {
+    display: table-cell;
+    background: red;
+    padding: 0.5em;
+    color: black;
+}
+
+.point_repo {
+    display: table-cell;
+    text-align: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
