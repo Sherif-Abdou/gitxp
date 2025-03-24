@@ -69,7 +69,6 @@ def populate_points_for(engine, user_id, repo_id):
 
         session.add_all([point_source_a, point_source_b])
         session.commit()
-
 def init_db():
     load_dotenv()
     db_url = getenv("POSTGRES_DB")
