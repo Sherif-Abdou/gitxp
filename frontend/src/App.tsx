@@ -3,18 +3,12 @@ import reactLogo from './assets/react.svg';
 import viteLogo from './assets/vite.svg';
 import './App.css';
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { PointView } from './PointView';
 
 function App() {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      <nav className="navbar">
       <h1>GitXP</h1>
       <div className="card">
         <SignedOut>
@@ -24,9 +18,8 @@ function App() {
           <UserButton />
         </SignedIn>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos for documentation
-      </p>
+      </nav>
+      <PointView />
     </>
   );
 }
