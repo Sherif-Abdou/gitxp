@@ -19,7 +19,7 @@ export function PointView() {
 
     if (!isSignedIn) {
         return (<div>
-                Sign in to view your points
+                Please sign in to see points
                 </div>);
     }
     const items = data.map(item =>
