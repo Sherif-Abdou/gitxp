@@ -42,19 +42,19 @@ export function PointView() {
     );
     return (
         <>
-        <h2 className="user_greeting">{greeting}, {name}!</h2>
-        <table className="point_view">
-            <thead>
-            <tr>
-                <th>Points</th>
-                <th>Point Type</th>
-                <th>Repository</th>
-            </tr>
-            </thead>
-            <tbody>
-            {items}
-            </tbody>
-        </table>
+            <h2 className="greeting wiggle">{greeting}, {name}!</h2>
+            <table className="point_view">
+                <thead>
+                <tr>
+                    <th>Points</th>
+                    <th>Point Type</th>
+                    <th>Repository</th>
+                </tr>
+                </thead>
+                <tbody>
+                {items}
+                </tbody>
+            </table>
         </>
     );
 }
