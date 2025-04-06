@@ -21,6 +21,9 @@ export function PointView() {
         });
     }, [isSignedIn]);
 
+    if (!isLoaded) {
+        return <div>Loading...</div>; // Clerk loading
+    }
 
     if (!isSignedIn) {
         return (
