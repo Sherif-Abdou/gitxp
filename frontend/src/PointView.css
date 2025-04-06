@@ -4,10 +4,31 @@
     border-collapse: separate;
     border-spacing: 0rem 1rem;
 }
+
 .point_view > tr > th {
     /* font-family: Roberto, sans-serif; */
     font-size: 1.25rem;
     padding: 1em;
+}
+
+.welcome_container {
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    border-radius: 12px;
+    color: white;
+}
+
+.welcome_title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.welcome_subtext {
+    font-size: 1.25rem;
+    opacity: 0.9;
 }
 
 .point_item {

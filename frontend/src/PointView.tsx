@@ -7,6 +7,11 @@ export function PointView() {
     const [data, setData] = useState([] as Event[]);
     const { isSignedIn, user, isLoaded } = useUser();
 
+    // Random hi message
+    const greetings = ["Hi", "Howdy", "Welcome back", "Hey there", "We've missed you"];
+    const [greeting] = useState(() =>
+        greetings[Math.floor(Math.random() * greetings.length)]
+    );
 
     useEffect(() => {
         const name = "sherif";
@@ -18,10 +23,16 @@ export function PointView() {
 
 
     if (!isSignedIn) {
-        return (<div>
-                Please sign in to see points
-                </div>);
+        return (
+        <div className="welcome_container">
+            <h1 className="welcome_title">Next-level GitHub Visualization</h1>
+            <p className="welcome_subtext">Please sign in to see your progress and gain XP 🚀</p>
+        </div>
+        );
     }
+
+    const name = user.firstName || user.username || "there";
+
     const items = data.map(item =>
     (<tr className="point_item">
      <td className="point_number">{item.points}</td>
@@ -30,6 +41,8 @@ export function PointView() {
     </tr>)
     );
     return (
+        <>
+        <h2 className="user_greeting">{greeting}, {name}!</h2>
         <table className="point_view">
             <thead>
             <tr>
@@ -42,5 +55,6 @@ export function PointView() {
             {items}
             </tbody>
         </table>
+        </>
     );
 }
