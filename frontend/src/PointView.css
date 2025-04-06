@@ -50,10 +50,10 @@ animation: wiggle 0.5s ease-in-out;
     text-align: center; /* Optionally center the text within */
 }
 
-.point_item {
-    /* display: flex; */
-    /* flex-direction: row; */
-}
+/* .point_item {
+    display: flex;
+    flex-direction: row;
+} */
 
 .point_number {
     display: table-cell;

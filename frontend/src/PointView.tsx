@@ -34,7 +34,7 @@ export function PointView() {
         );
     }
 
-    const name = user.firstName?.trim() || user.username?.trim() || ""; // username fallback chain
+    const name = user.firstName?.trim() || user.username?.trim() || "Coder"; // username fallback chain
 
     const items = data.map(item =>
     (<tr className="point_item">
