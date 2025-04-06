@@ -8,7 +8,7 @@ export function PointView() {
     const { isSignedIn, user, isLoaded } = useUser();
 
     // Random hi message
-    const greetings = ["Hi", "Howdy", "Welcome back", "Hey there", "We've missed you"];
+    const greetings = ["Howdy", "Welcome back", "Hey", "Hey there", "We've missed you"];
     const [greeting] = useState(() =>
         greetings[Math.floor(Math.random() * greetings.length)]
     );
@@ -31,7 +31,7 @@ export function PointView() {
         );
     }
 
-    const name = user.firstName || user.username || "there";
+    const name = user.firstName?.trim() || user.username?.trim() || ""; // username fallback chain
 
     const items = data.map(item =>
     (<tr className="point_item">
