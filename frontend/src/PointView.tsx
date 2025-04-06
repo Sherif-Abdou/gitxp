@@ -14,12 +14,12 @@ export function PointView() {
     );
 
     useEffect(() => {
-        const name = "sherif";
+        const name = user?.username || user?.firstName || "defaultName";
         getPointEventsForUser(name).then(data => {
             console.log(data);
             setData(data);
         });
-    }, [isSignedIn]);
+    }, [isSignedIn, user]);
 
     if (!isLoaded) {
         return <div>Loading...</div>; // Clerk loading
