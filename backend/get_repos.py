@@ -23,7 +23,7 @@ for repo in data:
 
     contributors = set()
 
-    # Rather than accessing collaborats, which is private information, get contributors from past commits
+    # Rather than accessing collaborators, which is private information, get contributors from past commits
     commits_url = repo["commits_url"][:-6]
     commits_response = requests.get(commits_url, headers=headers)
     commits_data = commits_response.json()
