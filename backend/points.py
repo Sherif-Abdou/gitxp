@@ -66,6 +66,6 @@ def calculate_points(point_sources):
     total_points = 0
     for source in point_sources:
         attentuation = time_attentuation(days_since(source.time))
-        total_points += source.points * attentuation
+        total_points += round(100 * source.points * attentuation)
     return total_points
 
