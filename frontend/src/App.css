@@ -69,6 +69,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
+  color: #dd5e34
 }
 
 .nav-item:hover {
@@ -136,21 +137,129 @@
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 6s linear infinite;
+  animation: shimmer-one-way 6s linear infinite;
 }
 
-@keyframes shimmer {
+@keyframes shimmer-one-way {
   0% {
     background-position: 0% 50%;
   }
-  50% {
-    background-position: 100% 50%;
-  }
   100% {
-    background-position: 0% 50%;
+    background-position: 400% 50%;
   }
 }
 
-/* .read-the-docs {
-  color: #888;
-} */
+.content-container {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.leaderboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #dbdbdb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.leaderboard-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+  text-align: left;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-row:hover {
+  background-color: #f1f1f1;
+}
+
+.even-row {
+  background-color: #ffffff;
+}
+
+.odd-row {
+  background-color: #f8f8f8;
+}
+
+.rank-column {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.name-column {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.score-column {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.rank-entry {
+  font-weight: bold;
+  color: black;
+}
+
+.name-entry {
+  font-weight: bold;
+  color: black;
+}
+
+.score-entry {
+  font-weight: bold;
+  color: black;
+}
+
+.loading, .error-message, .no-data {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}
+
+.error-message {
+  color: #d32f2f;
+}
+
+.placeholder {
+  padding: 3rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}

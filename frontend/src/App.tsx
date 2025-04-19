@@ -1,9 +1,10 @@
 import './App.css';
 import { SetStateAction, useEffect, useState } from 'react'
 import { useUser } from '@clerk/clerk-react'
-import { getPointEventsForUser} from './api/api.ts';
+import { getPointEventsForUser } from './api/api.ts';
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { PointView } from './PointView';
+import { Leaderboard } from './Leaderboard.tsx';
 import logoImage from './assets/gitxp.png';
 
 function App() {
@@ -24,7 +25,19 @@ function App() {
 
   const handleNavClick = (navItem: SetStateAction<string>) => {
     setActiveNav(navItem);
-    // handle navigation or view changes
+  };
+
+  const renderContent = () => {
+    switch (activeNav) {
+      case 'home':
+        return <PointView />;
+      case 'repos':
+        return <div className="placeholder">Repository view coming soon!</div>;
+      case 'leaderboard':
+        return <Leaderboard />;
+      default:
+        return <PointView />;
+    }
   };
 
   return (
@@ -70,7 +83,10 @@ function App() {
           </SignedIn>
         </div>
       </nav>
-      <PointView />
+
+      <div className="content-container">
+        {renderContent()}
+      </div>
     </div>
   );
 }
