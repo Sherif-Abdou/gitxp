@@ -12,6 +12,8 @@ export function PointView() {
     const [greeting] = useState(() =>
         greetings[Math.floor(Math.random() * greetings.length)]
     );
+    const totalPoints = data.reduce((acc, event) => acc + event.points, 0);
+
 
     useEffect(() => {
         const name = user?.username || user?.firstName || "defaultName";
@@ -36,13 +38,13 @@ export function PointView() {
 
     const name = user.firstName?.trim() || user.username?.trim() || "Coder"; // username fallback chain
 
-    const items = data.map(item =>
-    (<tr className="point_item">
-     <td className="point_number">{item.points}</td>
-     <td className="point_type">{item.point_type.toUpperCase()}</td>
-     <td className="point_repo">{item.repository}</td>
-    </tr>)
-    );
+    const items = data.map(item => (
+    <tr className="point_item">
+        <td className="point_number"><div className="point_inner">{item.points}</div></td>
+        <td className="point_type"><div className="point_inner">{item.point_type}</div></td>
+        <td className="point_repo"><div className="point_inner">{item.repository}</div></td>
+    </tr>
+    ));
     return (
         <>
             <h2 className="greeting wiggle">{greeting}, {name}!</h2>

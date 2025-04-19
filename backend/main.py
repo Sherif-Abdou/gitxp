@@ -5,6 +5,7 @@ from flask import Flask, Response, json, g
 import database
 from sqlalchemy import Sequence, select, Engine
 from sqlalchemy.orm import Session
+from points import calculate_points
 import points
 
 db_engine = None
