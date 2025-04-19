@@ -59,6 +59,7 @@ animation: wiggle 0.5s ease-in-out;
 } */
 
 .point_inner {
+    font-weight: bold;
     display: flex;
     align-items: center;      /* vertical centering */
     justify-content: center;  /* horizontal centering */
@@ -71,10 +72,17 @@ animation: wiggle 0.5s ease-in-out;
     margin: 0 auto;           /* center within the cell */
 }
 
+.point_number .point_inner {
+    font-family: 'Winky Rough', cursive;
+}
+
+
 .point_type .point_inner {
+    font-family: 'Winky Rough', cursive;
     background-color: #de4444;
 }
 
 .point_repo .point_inner {
+    font-family: 'Winky Rough', cursive;
     background-color: #87c6d0;
 }
