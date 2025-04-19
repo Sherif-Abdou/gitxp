@@ -3,6 +3,7 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0rem 1rem;
+    color: #dd5e34;
 }
 
 .point_view > tr > th {
@@ -48,6 +49,7 @@ animation: wiggle 0.5s ease-in-out;
     max-width: 21%; /* Adjust this value to fit your design */
     margin: 0 auto; /* Centers the element horizontally */
     text-align: center; /* Optionally center the text within */
+    color: #f7debc;
 }
 
 /* .point_item {
@@ -59,7 +61,7 @@ animation: wiggle 0.5s ease-in-out;
     display: flex;
     align-items: center;      /* vertical centering */
     justify-content: center;  /* horizontal centering */
-    background-color: #90EE90;
+    background-color: #75ce75;
     color: black;
     padding: 0.5em 1em;
     border-radius: 999px;
@@ -69,9 +71,9 @@ animation: wiggle 0.5s ease-in-out;
 }
 
 .point_type .point_inner {
-    background-color: red;
+    background-color: #de4444;
 }
 
 .point_repo .point_inner {
-    background-color: #e0e0e0;
+    background-color: #87c6d0;
 }
