@@ -37,6 +37,96 @@
   padding: 2em;
 }
 
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  color: white;
+  position: relative; /* Added to allow absolute positioning of child elements */
+}
+
+.logo-container {
+  position: absolute;
+  left: -5rem;
+  top: 1.5em;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(
+    45deg,
+    #ff3d00,
+    #ff9e80,
+    #ffca28,
+    #66bb6a,
+    #26c6da,
+    #5e35b1
+  );
+  background-size: 300% 300%;
+  padding: 5px; /* Creates border effect */
+  animation: logo-wave 8s linear infinite;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: white; /* Background for the image */
+}
+
+@keyframes logo-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.xp_badge {
+  background: #111;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.xp_text {
+  font-weight: bold;
+  font-size: 1.1rem;
+  background: linear-gradient(
+    270deg,
+    gold,
+    #007bff,
+    #00c3ff,
+    gold
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* .read-the-docs {
   color: #888;
 } */
