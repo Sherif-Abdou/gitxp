@@ -121,3 +121,19 @@ def get_repository_list():
 
     return response
 
+@app.route("/leaderboard", methods=['GET'])
+def get_leaderboard():
+    engine = db_engine
+
+    leaderboard = database.point_leaderboard(engine)
+
+    data = [(a, b) for ((a,), b) in leaderboard]
+
+    data.sort(key=lambda a: a[1], reverse=True)
+
+    response = Response(json.dumps(data));
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
+
+    return response
+

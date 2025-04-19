@@ -5,6 +5,7 @@ import sqlalchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, relationship
 from os import getenv
 from dotenv import load_dotenv
+import points
 
 import points
 from backend_api import *
@@ -138,6 +139,26 @@ def get_repo_list(engine):
         items = session.execute(stmt).all()
 
         return items
+
+def find_point_sources_for(engine, user, repository=None):
+    with Session(engine, expire_on_commit=False) as session:
+        stmt = select(PointSource).join(PointSource.user).join(PointSource.repo).where(User.name == user)
+        if repository is not None:
+            stmt = stmt.where(Repository.name == repository)
+
+        result = session.execute(stmt).all()
+        return result
+
+def point_leaderboard(engine):
+    with Session(engine) as session:
+        users = session.execute(select(User.name)).all()
+        user_points = []
+        for (user,) in users:
+            point_sources = find_point_sources_for(engine, user)
+            total_points = points.calculate_points(map(lambda a: a[0], point_sources))
+            user_points.append(total_points)
+        return list(zip(users, user_points))
+
 
 def init_db(echo=True):
     load_dotenv()
