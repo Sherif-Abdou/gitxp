@@ -1,4 +1,4 @@
-interface Event {
+export interface Event {
     points: number,
     point_type: string,
     repository: string,
