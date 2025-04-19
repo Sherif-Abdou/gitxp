@@ -7,7 +7,7 @@ import os
 load_dotenv()
 
 # url = "https://api.github.com/repos/danushsingla/PantryTracker/commits"
-url = "https://api.github.com/users/danushsingla/events"
+url = "https://api.github.com/users/sherif-abdou/events?per_page=50"
 headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
 
 response = requests.get(url, headers=headers)
@@ -18,7 +18,7 @@ with open("response.txt", "w") as file:
 
 # Iterate through each event in data
 for event in data:
-    print("Event Type: ", event["type"][:-5])
+    print("Event Type: ", event["type"])
     print("Repo: ", event["repo"]["name"])
     date_time = event["created_at"][:-1].split("T")
     print("Date: ", date_time[1], date_time[0])

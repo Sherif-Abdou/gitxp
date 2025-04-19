@@ -1,9 +1,11 @@
 from functools import reduce
+import backend_api
 from flask import Flask, Response, json, g
-from database import PointSource, User, Repository, init_db
+# from database import PointSource, User, Repository, init_db
+import database
 from sqlalchemy import Sequence, select, Engine
 from sqlalchemy.orm import Session
-from points import calculate_points
+import points
 
 db_engine = None
 
@@ -12,7 +14,8 @@ def create_app():
 
     global db_engine
     if db_engine is None:
-        db_engine = init_db()
+        db_engine = database.init_db()
+        database.Base.metadata.create_all(db_engine)
             
     return app
 
@@ -23,9 +26,9 @@ app = create_app()
 def find_point_sources_for(user, repository=None):
     engine = db_engine
     with Session(engine, expire_on_commit=False) as session:
-        stmt = select(PointSource).join(PointSource.user).join(PointSource.repo).where(User.name == user)
+        stmt = select(database.PointSource).join(database.PointSource.user).join(database.PointSource.repo).where(database.User.name == user)
         if repository is not None:
-            stmt = stmt.where(Repository.name == repository)
+            stmt = stmt.where(database.Repository.name == repository)
 
         result = session.execute(stmt).all()
         return result
@@ -34,10 +37,21 @@ def find_point_sources_for(user, repository=None):
 def find_repositories_for(user):
     engine = db_engine
     with Session(engine) as session:
-        stmt = select(Repository).join(PointSource.user).join(PointSource.repo).where(User.name == user)
+        stmt = select(database.Repository).join(database.PointSource.user).join(database.PointSource.repo).where(database.User.name == user)
         
         result = session.execute(stmt).all()
         return result
+
+def populate_user_if_needed(username):
+    engine = db_engine
+    with Session(engine) as session:
+        stmt = select(database.User).where(database.User.name == username)
+
+        exists = session.execute(stmt).first()
+        if not exists:
+            events = backend_api.get_user_events(username)
+            print(events)
+            database.load_events_to_db(engine, username, events)
 
 @app.route("/")
 def hello_world():
@@ -45,6 +59,12 @@ def hello_world():
 
 @app.route("/users/<username>/point_list", methods=['GET'])
 def get_point_sources(username):
+    engine = db_engine
+    repos = backend_api.get_repos(username)
+    if len(repos) > 0:
+        database.load_repos_to_db(engine, repos)
+
+    populate_user_if_needed(username)
     point_sources = find_point_sources_for(username)
     table = [
             {"points": item[0].points, 
@@ -61,7 +81,7 @@ def get_point_sources(username):
 def get_user_points(username):
     point_sources = find_point_sources_for(username)
 
-    total_points = calculate_points(map(lambda a: a[0], point_sources))
+    total_points = points.calculate_points(map(lambda a: a[0], point_sources))
 
     response = Response(json.dumps({
         "user": username,
@@ -83,6 +103,21 @@ def get_user_repositories(username):
         "repositories": point_table        
         }))
     response.headers["Access-Control-Allow-Origin"] = "*"
+
+    return response
+
+@app.route("/repositories", methods=['GET'])
+def get_repository_list():
+    engine = db_engine
+    repositories = database.get_repo_list(engine)
+
+    score_fn = lambda repo: (repo.stars + repo.forks + repo.watchers + (repo.open_issues / 5))
+
+    data = [{"name": repo.name, "stars": repo.stars, "forks": repo.forks, "watchers": repo.watchers, "open_issues": repo.open_issues} for (repo,) in sorted(repositories, key=lambda repo: score_fn(repo[0]), reverse=True)]
+
+    response = Response(json.dumps(data));
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
 
     return response
 
