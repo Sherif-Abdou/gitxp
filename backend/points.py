@@ -1,42 +1,55 @@
 from typing import Iterable
-from database import PointSource
+from typing_extensions import override
 from enum import Enum
+import database
 from datetime import datetime
 from math import log2
 
-def GithubEvent():
-    def generate_points(self):
-        pass
+class GithubEvent():
+    def __init__(self):
+        self.timestamp = datetime.now()
+        self.repo = ""
 
-def CommitEvent(GithubEvent):
+    def generate_points(self):
+        return 0.0
+
+class CommitEvent(GithubEvent):
     def __init__(self, additions, deletions):
+        super().__init__()
         self.__additions = additions
         self.__deletions = deletions
 
     def generate_points(self):
-        return 0.75 * log2(self.__additions) + 0.25 * log2(self.__deletions)
+        return 0.75 * log2(max(self.__additions, 1)) + 0.25 * log2(max(self.__deletions, 1))
 
-def OpenIssueEvent(GithubEvent):
+class OpenIssueEvent(GithubEvent):
     def __init__(self):
         pass
 
     def generate_points(self):
         return 1
 
-def OpenPullRequestEvent(GithubEvent):
+class OpenPullRequestEvent(GithubEvent):
     def __init__(self):
         pass
 
     def generate_points(self):
         return 8
 
-def ClosePullRequestEvent(GithubEvent):
+class CreateRepoEvent(GithubEvent):
+    def __init__(self):
+        super().__init__()
+        pass
+    def generate_points(self):
+        return 4
+
+class ClosePullRequestEvent(GithubEvent):
     def __init__(self, additions, deletions):
         self.__additions = additions
         self.__deletions = deletions
 
     def generate_points(self):
-        return 3.75 * log2(self.__additions) + 1.25 * log2(self.__deletions)
+        return 3.75 * log2(max(self.__additions, 1)) + 1.25 * log2(max(self.__deletions, 1))
 
 # Calculates the number of days since a given datetime
 def days_since(source: datetime):
@@ -49,7 +62,7 @@ def time_attentuation(days):
     return 1.0 / (1.0 + 0.02 * days)
 
 # Accumulates point sources and weights them based off of time
-def calculate_points(point_sources: Iterable[PointSource]):
+def calculate_points(point_sources):
     total_points = 0
     for source in point_sources:
         attentuation = time_attentuation(days_since(source.time))
