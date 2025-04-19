@@ -97,7 +97,7 @@ def get_user_repositories(username):
     repositories = find_repositories_for(username)
     point_table = dict()
     for (repository,) in repositories:
-        point_table[repository.name] = calculate_points(map(lambda a: a[0], find_point_sources_for(username, repository.name)))
+        point_table[repository.name] = points.calculate_points(map(lambda a: a[0], find_point_sources_for(username, repository.name)))
 
     response = Response(json.dumps({
         "user": username,
