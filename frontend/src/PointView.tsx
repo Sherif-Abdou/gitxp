@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { useUser } from '@clerk/clerk-react'
 import { getPointEventsForUser, Event } from './api/api.ts';
 import "./PointView.css"
@@ -9,21 +7,35 @@ export function PointView() {
     const [data, setData] = useState([] as Event[]);
     const { isSignedIn, user, isLoaded } = useUser();
 
+    // Random hi message
+    const greetings = ["Howdy", "Welcome back", "Hey", "Hey there", "We've missed you"];
+    const [greeting] = useState(() =>
+        greetings[Math.floor(Math.random() * greetings.length)]
+    );
 
     useEffect(() => {
-        const name = "sherif";
+        const name = user?.username || user?.firstName || "defaultName";
         getPointEventsForUser(name).then(data => {
             console.log(data);
             setData(data);
         });
-    }, [isSignedIn]);
+    }, [isSignedIn, user]);
 
+    if (!isLoaded) {
+        return <div>Loading...</div>; // Clerk loading
+    }
 
     if (!isSignedIn) {
-        return (<div>
-                Please sign in to see points
-                </div>);
+        return (
+        <div className="welcome_container">
+            <h1 className="welcome_title">Next-level GitHub Visualization</h1>
+            <p className="welcome_subtext">Please sign in to see your progress and gain XP 🚀</p>
+        </div>
+        );
     }
+
+    const name = user.firstName?.trim() || user.username?.trim() || "Coder"; // username fallback chain
+
     const items = data.map(item =>
     (<tr className="point_item">
      <td className="point_number">{item.points}</td>
@@ -32,17 +44,20 @@ export function PointView() {
     </tr>)
     );
     return (
-        <table className="point_view">
-            <thead>
-            <tr>
-                <th>Points</th>
-                <th>Point Type</th>
-                <th>Repository</th>
-            </tr>
-            </thead>
-            <tbody>
-            {items}
-            </tbody>
-        </table>
+        <>
+            <h2 className="greeting wiggle">{greeting}, {name}!</h2>
+            <table className="point_view">
+                <thead>
+                <tr>
+                    <th>Points</th>
+                    <th>Point Type</th>
+                    <th>Repository</th>
+                </tr>
+                </thead>
+                <tbody>
+                {items}
+                </tbody>
+            </table>
+        </>
     );
 }

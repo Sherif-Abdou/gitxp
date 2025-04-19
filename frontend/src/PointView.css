@@ -4,16 +4,56 @@
     border-collapse: separate;
     border-spacing: 0rem 1rem;
 }
+
 .point_view > tr > th {
     /* font-family: Roberto, sans-serif; */
     font-size: 1.25rem;
     padding: 1em;
 }
 
-.point_item {
-    /* display: flex; */
-    /* flex-direction: row; */
+.welcome_container {
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    border-radius: 12px;
+    color: white;
 }
+
+.welcome_title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.welcome_subtext {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+/* For welcome text */
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.wiggle:hover {
+animation: wiggle 0.5s ease-in-out;
+}
+
+.greeting {
+    max-width: 15%; /* Adjust this value to fit your design */
+    margin: 0 auto; /* Centers the element horizontally */
+    text-align: center; /* Optionally center the text within */
+}
+
+/* .point_item {
+    display: flex;
+    flex-direction: row;
+} */
 
 .point_number {
     display: table-cell;
