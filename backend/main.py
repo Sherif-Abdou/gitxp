@@ -68,7 +68,7 @@ def get_point_sources(username):
     populate_user_if_needed(username)
     point_sources = find_point_sources_for(username)
     table = [
-            {"points": points.time_attentuation(points.days_since(item[0].time)), 
+            {"points": item[0].points * points.time_attentuation(points.days_since(item[0].time)), 
              "point_type": item[0].point_type,
              "repository": item[0].repo.name
              } for item in point_sources]
