@@ -68,7 +68,7 @@ def get_point_sources(username):
     populate_user_if_needed(username)
     point_sources = find_point_sources_for(username)
     table = [
-            {"points": item[0].points, 
+            {"points": points.time_attentuation(points.days_since(item[0].time)), 
              "point_type": item[0].point_type,
              "repository": item[0].repo.name
              } for item in point_sources]
@@ -97,7 +97,7 @@ def get_user_repositories(username):
     repositories = find_repositories_for(username)
     point_table = dict()
     for (repository,) in repositories:
-        point_table[repository.name] = calculate_points(map(lambda a: a[0], find_point_sources_for(username, repository.name)))
+        point_table[repository.name] = points.calculate_points(map(lambda a: a[0], find_point_sources_for(username, repository.name)))
 
     response = Response(json.dumps({
         "user": username,
