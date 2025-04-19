@@ -12,7 +12,6 @@ export function PointView() {
     const [greeting] = useState(() =>
         greetings[Math.floor(Math.random() * greetings.length)]
     );
-    const totalPoints = data.reduce((acc, event) => acc + event.points, 0);
 
 
     useEffect(() => {
