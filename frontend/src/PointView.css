@@ -46,6 +46,7 @@ animation: wiggle 0.5s ease-in-out;
 }
 
 .greeting {
+    font-family: 'Winky Rough', cursive;
     max-width: 21%; /* Adjust this value to fit your design */
     margin: 0 auto; /* Centers the element horizontally */
     text-align: center; /* Optionally center the text within */
