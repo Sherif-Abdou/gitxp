@@ -10,6 +10,9 @@ import points
 import points
 from backend_api import *
 
+import points
+from backend_api import *
+
 class Base(DeclarativeBase):
     pass
 
@@ -158,7 +161,6 @@ def point_leaderboard(engine):
             total_points = points.calculate_points(map(lambda a: a[0], point_sources))
             user_points.append(total_points)
         return list(zip(users, user_points))
-
 
 def init_db(echo=True):
     load_dotenv()
