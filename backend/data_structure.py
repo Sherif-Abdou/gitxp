@@ -81,26 +81,45 @@ class Repo:
         contributors_temp = set()
         headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
 
-        # Rather than accessing collaborators, which is private information, get contributors from past commits
-        commits_response = requests.get(self.commits_url, headers=headers)
-        commits_data = commits_response.json()
+        # Add per_page=100 to end of commits_url 
+        url_edited = self.commits_url + "?per_page=100&"
 
-        for commit in commits_data:
-            if commit["author"] is not None:
-                if commit["author"]["login"] not in contributors_temp:
-                    contributors_temp.add(commit["author"]["login"])
-            if commit["committer"] is not None:
-                if commit["committer"]["login"] not in contributors_temp:
-                    contributors_temp.add(commit["committer"]["login"])
-        self.contributors = list(contributors_temp)
+        page = 1
 
-        # Store commit messages, dates, and authors in the commits list
-        for commit in commits_data:
-            commit_object = Commit(commit["commit"]["message"],
-                                   commit["commit"]["author"]["date"],
-                                    commit["commit"]["author"]["name"],
-                                    commit["url"])
-            self.commits.append(commit_object)
+        while True:
+            # Attach page number to the URL
+            paginated_url = f"{url_edited}page={page}"
+            print(paginated_url)
+            page += 1
+
+            # Rather than accessing collaborators, which is private information, get contributors from past commits
+            commits_response = requests.get(paginated_url, headers=headers)
+            commits_data = commits_response.json()
+
+            if not commits_data:
+                    break
+
+            # if commits_response.status_code != 200:
+            #     print(f"Failed to fetch commits: {commits_response.status_code}")
+            #     break
+            if(page == 10): break
+
+            for commit in commits_data:
+                if commit["author"] is not None:
+                    if commit["author"]["login"] not in contributors_temp:
+                        contributors_temp.add(commit["author"]["login"])
+                if commit["committer"] is not None:
+                    if commit["committer"]["login"] not in contributors_temp:
+                        contributors_temp.add(commit["committer"]["login"])
+            self.contributors = list(contributors_temp)
+
+            # Store commit messages, dates, and authors in the commits list
+            for commit in commits_data:
+                commit_object = Commit(commit["commit"]["message"],
+                                    commit["commit"]["author"]["date"],
+                                        commit["commit"]["author"]["name"],
+                                        commit["url"])
+                self.commits.append(commit_object)
 
     def get_prs_score(self):
         # Add all additions, deletions, changes, commits for each pull request, average them, and decay over time
