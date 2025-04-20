@@ -30,7 +30,7 @@ export function PointView() {
         return (
         <div className="welcome_container">
             <h1 className="welcome_title">Next-level GitHub Visualization</h1>
-            <p className="welcome_subtext">Please sign in to see your progress and gain XP 🚀</p>
+            <p className="welcome_subtext">Sign in to see your progress and gain XP 🚀</p>
         </div>
         );
     }

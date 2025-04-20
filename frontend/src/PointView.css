@@ -13,12 +13,37 @@
 }
 
 .welcome_container {
-    margin-top: 4rem;
-    padding: 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    border-radius: 12px;
-    color: white;
+position: relative;
+margin-top: 4rem;
+padding: 2rem;
+text-align: center;
+color: white;
+border-radius: 12px;
+background: linear-gradient(135deg, #1f1c2c, #928dab);
+overflow: hidden;
+}
+
+.welcome_container::before {
+content: "";
+position: absolute;
+top: 0;
+left: -50%;
+width: 200%;
+height: 100%;
+background: linear-gradient(
+    120deg,
+    transparent 44.5%,
+    #ffd700 50%,
+    transparent 55.5%
+  );
+animation: shimmerPass 8s linear infinite;
+pointer-events: none; /* ensure it doesn’t block interaction */
+}
+
+@keyframes shimmerPass {
+    0% { transform: translateX(-100%); }
+    20% { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
 }
 
 .welcome_title {
