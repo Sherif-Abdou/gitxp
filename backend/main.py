@@ -7,6 +7,7 @@ from sqlalchemy import Sequence, select, Engine
 from sqlalchemy.orm import Session
 from points import calculate_points
 import points
+from data_structure import Repos, Repo, Commit
 
 db_engine = None
 
@@ -92,8 +93,70 @@ def get_user_points(username):
 
     return response
 
-@app.route("/users/<username>/repositories", methods=['GET'])
+@app.route("/users/<username>/repositories/info", methods=['GET'])
 def get_user_repositories(username):
+    engine = db_engine
+    with Session(engine) as session:
+        # Check if user exists and has associated repositories
+        user = session.query(database.User).filter_by(name=username).first()
+        if not user or len(user.repositories_info) == 0:
+            # If no user or no repositories, fetch and store repo info
+            return fetch_and_store_repo_info(username)
+
+    # If user and repositories exist, return the stored info
+    info_list = []
+    for user_repo in user.repositories_info:
+        repo = user_repo.repository
+        info_list.append({
+            "name": repo.name,
+            "stars": repo.stars,
+            "watchers": repo.watchers,
+            "open_issues": repo.open_issues,
+            "forks": repo.forks,
+            "contributors": repo.contributors,
+            "commits": repo.commits,
+            "prs": repo.prs,
+            "issues": repo.issues,
+        })
+
+    response = Response(json.dumps({
+        "user": username,
+        "repositories": info_list,
+    }))
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
+    return response
+
+
+
+def fetch_and_store_repo_info(username):
+    info_list = []
+
+    repositories = find_repositories_for(username)
+    for (repo,) in repositories:
+        info_list.append({
+            "name": repo.name,
+            "stars": repo.stars,
+            "watchers": repo.watchers,
+            "open_issues": repo.open_issues,
+            "forks": repo.forks,
+            "contributors": repo.contributors,
+            "commits": repo.commits,
+            "prs": repo.prs,
+            "issues": repo.issues,
+        })
+
+    response = Response(json.dumps({
+        "user": username,
+        "repositories": info_list,
+    }))
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
+    return response
+
+
+@app.route("/users/<username>/repositories", methods=['GET'])
+def get_user_repositories_info(username):
     repositories = find_repositories_for(username)
     point_table = dict()
     for (repository,) in repositories:
