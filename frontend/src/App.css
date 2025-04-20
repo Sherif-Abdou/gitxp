@@ -223,7 +223,8 @@
     gold
   );
   background-size: 400% 400%;
-  -webkit-background-clip: text;
+  background-clip: text;              /* standard vers */
+  -webkit-background-clip: text;      /* webKit vers */
   -webkit-text-fill-color: transparent;
   animation: shimmer-one-way 6s linear infinite;
 }
