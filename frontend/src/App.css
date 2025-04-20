@@ -121,6 +121,12 @@
   align-items: center;
 }
 
+.xp-badge-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
 .xp_badge {
   background: #111;
   border-radius: 999px;
@@ -155,6 +161,46 @@
 
 .xp_badge:hover::after {
   animation: goldShimmer 1s ease forwards;
+}
+
+.xp-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 250px;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.6rem;
+  position: absolute;
+  z-index: 10;
+  top: 125%; /* Show above the badge */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  font-size: 0.85rem;
+  font-family: 'Winky Rough', cursive;
+
+  transform: translateX(-50%) translateY(-5px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.5s ease-in-out;
+}
+
+.xp-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; /* Arrow at the bottom of the tooltip */
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+
+.xp-badge-wrapper:hover .xp-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0); /* slide up into place */
 }
 
 @keyframes goldShimmer {
