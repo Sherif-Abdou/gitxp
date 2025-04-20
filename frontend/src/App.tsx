@@ -1,6 +1,6 @@
 import './App.css';
-import { SetStateAction, useEffect, useState } from 'react'
-import { useUser } from '@clerk/clerk-react'
+import { SetStateAction, useEffect, useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import { getPointEventsForUser } from './api/api.ts';
 import { CustomSignInButton } from './ClerkButton';
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
