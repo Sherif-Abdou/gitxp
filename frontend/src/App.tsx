@@ -5,6 +5,7 @@ import { getPointEventsForUser } from './api/api.ts';
 import { CustomSignInButton } from './ClerkButton';
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { PointView } from './PointView';
+import ReposTab from './Repos.tsx';
 import { Leaderboard } from './Leaderboard.tsx';
 import logoImage from './assets/gitxp.png';
 
@@ -33,7 +34,7 @@ function App() {
       case 'home':
         return <PointView />;
       case 'repos':
-        return <div className="placeholder">Repository view coming soon!</div>;
+        return <ReposTab username={user?.username || 'defaultName'} />;
       case 'leaderboard':
         return <Leaderboard />;
       default:
