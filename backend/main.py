@@ -1,16 +1,14 @@
-from functools import reduce
 import backend_api
-from flask import Flask, Response, json, g
+from flask import Flask, Response, json
 # from database import PointSource, User, Repository, init_db
 import database
-from sqlalchemy import Sequence, select, Engine
+from sqlalchemy import select
 from sqlalchemy.orm import Session
-from points import calculate_points
 import points
 from flask_cors import CORS
 import os
 import requests
-from data_structure import Repos, Repo, Commit
+from data_structure import Repos
 
 db_engine = None
 
@@ -135,9 +133,11 @@ def get_user_repositories(username):
 
 def fetch_and_store_repo_info(username):
     url = f"https://api.github.com/users/{username}/repos"
-    headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
+    headers = {
+        "Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"
+    }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers)    
     data = response.json()
 
     info_list = []
@@ -146,7 +146,6 @@ def fetch_and_store_repo_info(username):
     repos = Repos()
 
     for repo in data:
-        # Add each repo
         repos.add_repo(repo)
 
     repos_list = repos.get_repos()

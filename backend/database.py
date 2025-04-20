@@ -90,24 +90,24 @@ class PointSource(Base):
     repo: Mapped["Repository"] = relationship(lazy='subquery')
 
 # Populates some fake points entries in the database
-def populate_points_for(engine, user_id, repo_id):
-    print(f"\n\nUser id: {user_id}\n\n")
-    with Session(engine) as session:
-        point_source_a = PointSource(
-                points = 5,
-                point_type = "Commit",
-                user_id = user_id,
-                repo_id = repo_id,
-                )
-        point_source_b = PointSource(
-                points = 5,
-                point_type = "Commit",
-                user_id = user_id,
-                repo_id = repo_id,
-                )
+# def populate_points_for(engine, user_id, repo_id):
+#     print(f"\n\nUser id: {user_id}\n\n")
+#     with Session(engine) as session:
+#         point_source_a = PointSource(
+#                 points = 5,
+#                 point_type = "Commit",
+#                 user_id = user_id,
+#                 repo_id = repo_id,
+#                 )
+#         point_source_b = PointSource(
+#                 points = 5,
+#                 point_type = "Commit",
+#                 user_id = user_id,
+#                 repo_id = repo_id,
+#                 )
 
-        session.add_all([point_source_a, point_source_b])
-        session.commit()
+#         session.add_all([point_source_a, point_source_b])
+#         session.commit()
 
 def get_point_type(point):
     if isinstance(point, points.CommitEvent):
@@ -125,18 +125,21 @@ def get_point_type(point):
 def load_repos_to_db(engine, repos):
     with Session(engine) as session:
         to_add = []
-        to_update = []
         for repo in repos:
-            present = session.query(Repository.name).filter_by(name=repo.name).first() is not None
-            if present:
-                to_update.append(update(Repository).where(Repository.name==repo.name).values(stars=repo.stars, forks=repo.forks, watchers=repo.watchers, open_issues=repo.open_issues))
+            existing = session.query(Repository).filter_by(name=repo.name).first()
+            if existing:
+                if (existing.stars != repo.stars or
+                    existing.forks != repo.forks or
+                    existing.watchers != repo.watchers or
+                    existing.open_issues != repo.open_issues):
+                    existing.stars = repo.stars
+                    existing.forks = repo.forks
+                    existing.watchers = repo.watchers
+                    existing.open_issues = repo.open_issues
             else:
                 to_add.append(repo)
 
         session.add_all(to_add)
-        for u in to_update:
-            session.execute(u)
-
         session.commit()
 
 def load_events_to_db(engine, username, events):
@@ -145,13 +148,15 @@ def load_events_to_db(engine, username, events):
         if user is None:
             user = (User(name=username, github_username=username, clerk_hash=""),)
             session.add(user[0])
-            session.commit()
+        
         for event in events:
             repo_item = session.execute(select(Repository).where(Repository.name == event.repo)).first()
             if not repo_item:
                 session.add(Repository(name=event.repo, stars=0, forks=0, watchers=0, open_issues=0))
-                session.commit()
+
+        # Commit after adding all repositories and user (if needed)
         session.commit()
+
         for event in events:
             repo_item = session.execute(select(Repository).where(Repository.name == event.repo)).first()
             if not session.execute(select(PointSource).where(PointSource.time == event.timestamp)).first():
@@ -163,6 +168,8 @@ def load_events_to_db(engine, username, events):
                         user_id = user[0].id,
                         )
                 session.add(source)
+
+        # Commit after adding all PointSource objects
         session.commit()
 
 def get_repo_list(engine):
