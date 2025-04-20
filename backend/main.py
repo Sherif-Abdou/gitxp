@@ -99,36 +99,54 @@ def get_user_points(username):
 def get_user_repositories(username):
     engine = db_engine
     with Session(engine) as session:
-        # Check if user exists and has associated repositories
         user = session.query(database.User).filter_by(name=username).first()
+
         if not user or len(user.repositories_info) == 0:
-            # If no user or no repositories, fetch and store repo info
             return fetch_and_store_repo_info(username)
 
-    # If user and repositories exist, return the stored info
-    info_list = []
-    for user_repo in user.repositories_info:
-        repo = user_repo.repository
-        info_list.append({
-            "name": repo.name,
-            "stars": repo.get_stars(),
-            "watchers": repo.get_watchers(),
-            "open_issues": repo.get_open_issues(),
-            "forks": repo.get_forks(),
-            "contributors": repo.get_total_contributors(),
-            "commits": repo.get_total_commits(),
-            "prs": repo.get_total_prs(),
-            "issues": repo.get_total_issues(),
-        })
+        incomplete_repos = []
+        for user_repo in user.repositories_info:
+            repo = user_repo.repository
+            if (
+                repo.commits is None or
+                repo.contributors is None or
+                repo.prs is None or
+                repo.issues is None or
+                repo.stars is None or
+                repo.watchers is None or
+                repo.open_issues is None or
+                repo.forks is None
+            ):
+                incomplete_repos.append(repo.name)
 
-    response = Response(json.dumps({
-        "user": username,
-        "repositories": info_list,
-    }))
-    response.headers["Access-Control-Allow-Origin"] = "*"
+        if len(incomplete_repos) > 0:
+            return fetch_and_store_repo_info(username)
 
-    return response
+        # If all required fields exist, return from database
+        info_list = []
+        for user_repo in user.repositories_info:
+            repo = user_repo.repository
+            info_list.append({
+                "name": repo.name,
+                "stars": repo.stars,
+                "watchers": repo.watchers,
+                "open_issues": repo.open_issues,
+                "forks": repo.forks,
+                "contributors": repo.contributors,
+                "commits": repo.commits,
+                "prs": repo.prs,
+                "issues": repo.issues,
+            })
 
+        print('tomato')
+        print(info_list)
+
+        response = Response(json.dumps({
+            "user": username,
+            "repositories": info_list,
+        }))
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
 
 
 def fetch_and_store_repo_info(username):
@@ -150,7 +168,44 @@ def fetch_and_store_repo_info(username):
 
     repos_list = repos.get_repos()
 
+    # --- ADDED: Start DB session ---
+    engine = db_engine
+    with Session(engine) as session:
+        user = session.query(database.User).filter_by(name=username).first()
+        if not user:
+            user = database.User(name=username, github_username=username, clerk_hash="")
+            session.add(user)
+            session.commit()
+    # --- END DB setup ---
+
     for repo in repos_list:
+        # --- ADDED: Store repo metadata ---
+        with Session(engine) as session:
+            existing_repo = session.query(database.RepositoryInfo).filter_by(name=repo.name).first()
+            if not existing_repo:
+                existing_repo = database.RepositoryInfo(
+                    name=repo.name,
+                    stars=repo.get_stars(),
+                    watchers=repo.get_watchers(),
+                    open_issues=repo.get_open_issues(),
+                    forks=repo.get_forks(),
+                    contributors=repo.get_total_contributors(),
+                    commits=repo.get_total_commits(),
+                    prs=repo.get_total_prs(),
+                    issues=repo.get_total_issues()
+                )
+                session.add(existing_repo)
+                session.commit()
+
+            link = session.query(database.UserRepository).filter_by(
+                user_id=user.id,
+                repo_id=existing_repo.id
+            ).first()
+            if not link:
+                session.add(database.UserRepository(user_id=user.id, repo_id=existing_repo.id))
+                session.commit()
+        # --- END DB insert ---
+
         info_list.append({
             "name": repo.name,
             "stars": repo.get_stars(),
@@ -170,6 +225,7 @@ def fetch_and_store_repo_info(username):
     response.headers["Access-Control-Allow-Origin"] = "*"
 
     return response
+
 
 
 @app.route("/users/<username>/repositories", methods=['GET'])
