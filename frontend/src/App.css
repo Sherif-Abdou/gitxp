@@ -122,6 +122,43 @@
   padding: 0.6rem 1.2rem;
   margin-right: 2em; /* Fixed padding between badge and sign-in button */
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.xp_badge:hover {
+  transform: scale(1.05); /* Slightly enlarge */
+}
+
+.xp_badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 215, 0, 0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+.xp_badge:hover::after {
+  animation: goldShimmer 1s ease forwards;
+}
+
+@keyframes goldShimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .xp_text {
