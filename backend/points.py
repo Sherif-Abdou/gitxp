@@ -59,13 +59,13 @@ def days_since(source: datetime):
 def time_attentuation(days):
     if days > 365:
         return 0.0
-    return 1.0 / (1.0 + 0.02 * days)
+    return 1.0 / (1.0 + 0.0075 * days)
 
 # Accumulates point sources and weights them based off of time
 def calculate_points(point_sources):
     total_points = 0
     for source in point_sources:
         attentuation = time_attentuation(days_since(source.time))
-        total_points += source.points * attentuation
+        total_points += round(100 * source.points * attentuation)
     return total_points
 

@@ -38,6 +38,11 @@
   background-size: 300% 300%;
   padding: 5px; /* Creates border effect */
   animation: logo-wave 8s linear infinite;
+  transition: transform 0.3s ease-in-out, scale 0.2s ease-in-out;
+}
+
+.logo-container:hover {
+  transform: scale(1.1);
 }
 
 .logo-image {
@@ -116,12 +121,95 @@
   align-items: center;
 }
 
+.xp-badge-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
 .xp_badge {
   background: #111;
   border-radius: 999px;
   padding: 0.6rem 1.2rem;
   margin-right: 2em; /* Fixed padding between badge and sign-in button */
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.xp_badge:hover {
+  transform: scale(1.05); /* Slightly enlarge */
+}
+
+.xp_badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 215, 0, 0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+.xp_badge:hover::after {
+  animation: goldShimmer 1s ease forwards;
+}
+
+.xp-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 250px;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.6rem;
+  position: absolute;
+  z-index: 10;
+  top: 125%; /* Show above the badge */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  font-size: 0.85rem;
+  font-family: 'Winky Rough', cursive;
+
+  transform: translateX(-50%) translateY(-5px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.5s ease-in-out;
+}
+
+.xp-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; /* Arrow at the bottom of the tooltip */
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+
+.xp-badge-wrapper:hover .xp-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0); /* slide up into place */
+}
+
+@keyframes goldShimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .xp_text {
@@ -135,7 +223,8 @@
     gold
   );
   background-size: 400% 400%;
-  -webkit-background-clip: text;
+  background-clip: text;              /* standard vers */
+  -webkit-background-clip: text;      /* webKit vers */
   -webkit-text-fill-color: transparent;
   animation: shimmer-one-way 6s linear infinite;
 }
@@ -146,6 +235,70 @@
   }
   100% {
     background-position: 400% 50%;
+  }
+}
+
+.custom-signin-button {
+  background-color: #111;
+  color: #f7debc;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4); /* Subtle gold glow */
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+  animation: undulate 2.5s infinite ease-in-out;
+}
+
+.custom-signin-button:hover {
+  background-color: #333; 
+  color: #f7debc; /* Keep the gold text color */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 
+              0 0 40px rgba(255, 215, 0, 0.4),
+              0 0 60px rgba(255, 215, 0, 0.2); /* Stronger gold glow with multiple shadows */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  animation: undulate 1.5s infinite ease-in-out;
+}
+
+.custom-signin-button:focus {
+  outline: none;
+}
+
+@keyframes undulate {
+  0% {
+    box-shadow: 0 0 7.5px rgba(255, 215, 0, 0.6), 
+                0 0 10px rgba(255, 215, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 
+                0 0 30px rgba(255, 215, 0, 0.5),
+                0 0 40px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 7.5px rgba(255, 215, 0, 0.6), 
+                0 0 10px rgba(255, 215, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.2);
+  }
+}
+
+@keyframes undulate-fast {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 
+                0 0 20px rgba(255, 215, 0, 0.4),
+                0 0 30px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7), 
+                0 0 40px rgba(255, 215, 0, 0.5),
+                0 0 60px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 
+                0 0 20px rgba(255, 215, 0, 0.4),
+                0 0 30px rgba(255, 215, 0, 0.2);
   }
 }
 

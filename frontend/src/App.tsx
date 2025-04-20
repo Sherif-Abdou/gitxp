@@ -1,9 +1,11 @@
 import './App.css';
-import { SetStateAction, useEffect, useState } from 'react'
-import { useUser } from '@clerk/clerk-react'
+import { SetStateAction, useEffect, useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
 import { getPointEventsForUser } from './api/api.ts';
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { CustomSignInButton } from './ClerkButton';
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { PointView } from './PointView';
+import ReposTab from './Repos.tsx';
 import { Leaderboard } from './Leaderboard.tsx';
 import logoImage from './assets/gitxp.png';
 
@@ -32,7 +34,7 @@ function App() {
       case 'home':
         return <PointView />;
       case 'repos':
-        return <div className="placeholder">Repository view coming soon!</div>;
+        return <ReposTab username={user?.username || 'defaultName'} />;
       case 'leaderboard':
         return <Leaderboard />;
       default:
@@ -47,7 +49,7 @@ function App() {
           <div className="logo-container">
             <img src={logoImage} alt="GitXP Logo" className="logo-image" />
           </div>
-          <div className="nav-menu">
+          {isSignedIn && (<div className="nav-menu">
             <div 
               className={`nav-item ${activeNav === 'home' ? 'active' : ''}`}
               onClick={() => handleNavClick('home')}
@@ -66,17 +68,22 @@ function App() {
             >
               Leaderboard
             </div>
-          </div>
+          </div>)}
         </div>
         
         <div className="nav-right">
           {isSignedIn && (
-            <div className="xp_badge">
-              <span className="xp_text">⭐ {totalPoints}</span>
+            <div className="xp-badge-wrapper">
+              <div className="xp_badge">
+                <span className="xp_text">⭐ {totalPoints}</span>
+              </div>
+              <div className="xp-tooltip">
+                Make commits, issues, pull requests, or start a new repository to gain points!
+              </div>
             </div>
           )}
           <SignedOut>
-            <SignInButton />
+            <CustomSignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton />
