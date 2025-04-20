@@ -75,7 +75,7 @@ class Repo:
 
         self.store_commits()
 
-        self.activity_score = self.get_activity_score()
+        #self.activity_score = self.get_activity_score()
 
     def store_commits(self):
         contributors_temp = set()

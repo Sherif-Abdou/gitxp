@@ -7,8 +7,11 @@ type Repo = {
     forks: number;
     watchers: number;
     open_issues: number;
-    points: number;
-};
+    contributors: number;
+    commits: number;
+    prs: number;
+    issues: number;
+  };
 
 type Props = {
     username: string;
@@ -19,10 +22,10 @@ const RepoTab: React.FC<Props> = ({ username }) => {
 
     useEffect(() => {
         async function fetchData() {
-        const result = await getRepos(username);
-        setRepos(result);
+            const result = await getRepos(username);
+            setRepos(result.repositories); // adjust for new payload shape
         }
-
+    
         fetchData();
     }, [username]);
 
@@ -32,8 +35,16 @@ const RepoTab: React.FC<Props> = ({ username }) => {
         <ul>
             {repos.map((repo) => (
             <li key={repo.name}>
-                <strong>{repo.name}</strong> - ⭐ {repo.stars}, 🍴 {repo.forks}, 👀 {repo.watchers}, 🐛 {repo.open_issues}, 🔢 Points: {repo.points}
-            </li>
+            <strong>{repo.name}</strong><br />
+            ⭐ Stars: {repo.stars}<br />
+            🍴 Forks: {repo.forks}<br />
+            👀 Watchers: {repo.watchers}<br />
+            🐛 Open Issues: {repo.open_issues}<br />
+            👥 Contributors: {repo.contributors}<br />
+            🔁 Commits: {repo.commits}<br />
+            📦 PRs: {repo.prs}<br />
+            🧩 Issues: {repo.issues}
+          </li>
             ))}
         </ul>
         </div>

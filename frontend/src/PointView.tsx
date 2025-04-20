@@ -38,7 +38,7 @@ export function PointView() {
     const name = user.firstName?.trim() || user.username?.trim() || "Coder"; // username fallback chain
 
     const items = data.map(item => (
-    <tr key={`${item.points}-${item.point_type}-${item.repository}`} className="point_item">
+    <tr className="point_item">
         <td className="point_number"><div className="point_inner">{item.points}</div></td>
         <td className="point_type"><div className="point_inner">{item.point_type}</div></td>
         <td className="point_repo"><div className="point_inner">{item.repository}</div></td>

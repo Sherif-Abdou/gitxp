@@ -28,6 +28,8 @@ class User(Base):
     points: Mapped[List["PointSource"]] = relationship(
             back_populates="user", cascade="all, delete-orphan"
             )
+    
+    repositories_info: Mapped[List["UserRepository"]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
 class Repository(Base):
     __tablename__ = "repositories"
@@ -38,6 +40,33 @@ class Repository(Base):
     forks: Mapped[int] = mapped_column(Integer())
     watchers: Mapped[int] = mapped_column(Integer())
     open_issues: Mapped[int] = mapped_column(Integer())
+
+class RepositoryInfo(Base):
+    __tablename__ = "repositories_info"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(70))
+    stars: Mapped[int] = mapped_column(Integer())
+    forks: Mapped[int] = mapped_column(Integer())
+    watchers: Mapped[int] = mapped_column(Integer())
+    open_issues: Mapped[int] = mapped_column(Integer())
+
+    contributors: Mapped[int] = mapped_column(Integer(), default=0)
+    commits: Mapped[int] = mapped_column(Integer(), default=0)
+    prs: Mapped[int] = mapped_column(Integer(), default=0)
+    issues: Mapped[int] = mapped_column(Integer(), default=0)
+
+    users: Mapped[List["UserRepository"]] = relationship(back_populates="repository", cascade="all, delete-orphan")
+
+class UserRepository(Base):
+    __tablename__ = "user_repository"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
+    repo_id: Mapped[int] = mapped_column(ForeignKey("repositories_info.id"))
+
+    user: Mapped["User"] = relationship(back_populates="repositories_info")
+    repository: Mapped["RepositoryInfo"] = relationship(back_populates="users")
 
 
 # Represents a point source in the database

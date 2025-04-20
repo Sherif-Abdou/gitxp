@@ -3,6 +3,22 @@ export interface Event {
     point_type: string,
     repository: string,
 }
+export interface RepoInfo {
+    name: string;
+    stars: number;
+    watchers: number;
+    open_issues: number;
+    forks: number;
+    contributors: number;
+    commits: number;
+    prs: number;
+    issues: number;
+}
+  
+export interface UserRepoResponse {
+    user: string;
+    repositories: RepoInfo[];
+}
 
 
 export async function getPointEventsForUser(user: string): Promise<Event[]> {
@@ -25,28 +41,19 @@ export async function getLeaderboard(): Promise<[string, number][]> {
     }
 }
 
-export async function getRepos(username: string) {
+export async function getRepos(user: string) : Promise<UserRepoResponse> {
     try {
-      const [pointsResponse, metadataResponse] = await Promise.all([
-        fetch(`http://localhost:5000/users/${username}/repositories`),
-        fetch(`http://localhost:5000/repositories`)
-      ]);
+      const response = await fetch(`http://127.0.0.1:5000/users/${user}/repositories/info`);
   
-      if (!pointsResponse.ok || !metadataResponse.ok) {
+      if (!response.ok) {
         throw new Error('Failed to fetch repository data');
       }
   
-      const pointsData = await pointsResponse.json();
-      const metadata = await metadataResponse.json();
-  
-      const enriched = metadata.map((repo: any) => ({
-        ...repo,
-        points: pointsData.repositories[repo.name] || 0
-      }));
-  
-      return enriched;
+      console.log(response);
+
+      return await response.json();
     } catch (error) {
-      console.error('Error enriching repositories:', error);
-      return [];
+      console.error('Error getting repositories:', error);
+      return { user: "", repositories: [] };
     }
-  }
+}
