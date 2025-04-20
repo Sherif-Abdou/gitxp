@@ -63,10 +63,10 @@ class UserRepository(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
-    repo_id: Mapped[int] = mapped_column(ForeignKey("repositories.id"))
+    repo_id: Mapped[int] = mapped_column(ForeignKey("repositories_info.id"))
 
-    user: Mapped["User"] = relationship(back_populates="repositories")
-    repository: Mapped["Repository"] = relationship(back_populates="users")
+    user: Mapped["User"] = relationship(back_populates="repositories_info")
+    repository: Mapped["RepositoryInfo"] = relationship(back_populates="users")
 
 
 # Represents a point source in the database

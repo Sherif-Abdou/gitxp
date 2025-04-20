@@ -1,7 +1,5 @@
 from typing import Iterable
 from typing_extensions import override
-from enum import Enum
-import database
 from datetime import datetime
 from math import log2
 
