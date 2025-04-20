@@ -72,8 +72,13 @@ function App() {
         
         <div className="nav-right">
           {isSignedIn && (
-            <div className="xp_badge">
-              <span className="xp_text">⭐ {totalPoints}</span>
+            <div className="xp-badge-wrapper">
+              <div className="xp_badge">
+                <span className="xp_text">⭐ {totalPoints}</span>
+              </div>
+              <div className="xp-tooltip">
+                Make commits, issues, pull requests, or start a new repository to gain points!
+              </div>
             </div>
           )}
           <SignedOut>
