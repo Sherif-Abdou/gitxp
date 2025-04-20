@@ -38,6 +38,11 @@
   background-size: 300% 300%;
   padding: 5px; /* Creates border effect */
   animation: logo-wave 8s linear infinite;
+  transition: transform 0.3s ease-in-out, scale 0.2s ease-in-out;
+}
+
+.logo-container:hover {
+  transform: scale(1.1);
 }
 
 .logo-image {
@@ -185,6 +190,52 @@
     background-position: 400% 50%;
   }
 }
+
+.custom-signin-button {
+  background-color: #111;
+  color: #f7debc;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4); /* Subtle gold glow */
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.custom-signin-button:hover {
+  background-color: #333; /* Slightly lighter background on hover */
+  color: #f7debc; /* Keep the gold text color */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 
+              0 0 40px rgba(255, 215, 0, 0.4),
+              0 0 60px rgba(255, 215, 0, 0.2); /* Stronger gold glow with multiple shadows */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  animation: undulate 2s infinite ease-in-out; /* Add undulating animation */
+}
+
+.custom-signin-button:focus {
+  outline: none;
+}
+
+@keyframes undulate {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 
+                0 0 40px rgba(255, 215, 0, 0.4),
+                0 0 60px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), 
+                0 0 60px rgba(255, 215, 0, 0.5),
+                0 0 90px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 
+                0 0 40px rgba(255, 215, 0, 0.4),
+                0 0 60px rgba(255, 215, 0, 0.2);
+  }
+}
+
 
 .content-container {
   margin-top: 2rem;

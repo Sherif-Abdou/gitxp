@@ -2,7 +2,8 @@ import './App.css';
 import { SetStateAction, useEffect, useState } from 'react'
 import { useUser } from '@clerk/clerk-react'
 import { getPointEventsForUser } from './api/api.ts';
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { CustomSignInButton } from './ClerkButton';
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { PointView } from './PointView';
 import { Leaderboard } from './Leaderboard.tsx';
 import logoImage from './assets/gitxp.png';
@@ -47,7 +48,7 @@ function App() {
           <div className="logo-container">
             <img src={logoImage} alt="GitXP Logo" className="logo-image" />
           </div>
-          <div className="nav-menu">
+          {isSignedIn && (<div className="nav-menu">
             <div 
               className={`nav-item ${activeNav === 'home' ? 'active' : ''}`}
               onClick={() => handleNavClick('home')}
@@ -66,7 +67,7 @@ function App() {
             >
               Leaderboard
             </div>
-          </div>
+          </div>)}
         </div>
         
         <div className="nav-right">
@@ -76,7 +77,7 @@ function App() {
             </div>
           )}
           <SignedOut>
-            <SignInButton />
+            <CustomSignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton />
