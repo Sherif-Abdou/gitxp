@@ -44,21 +44,27 @@ export function PointView() {
         <td className="point_repo"><div className="point_inner">{item.repository}</div></td>
     </tr>
     ));
+
     return (
         <>
             <h2 className="greeting wiggle">{greeting}, {name}!</h2>
-            <table className="point_view">
-                <thead>
-                <tr>
-                    <th>Points</th>
-                    <th>Point Type</th>
-                    <th>Repository</th>
-                </tr>
-                </thead>
-                <tbody>
-                {items}
-                </tbody>
-            </table>
+            <div className="pointlog_container">
+                <h3 className="pointlog_title">GitLog</h3>
+                <div className="pointlog_scrollbox">
+                    <table className="point_view">
+                        <thead>
+                            <tr>
+                                <th>Points</th>
+                                <th>Point Type</th>
+                                <th>Repository</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {items}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </>
     );
 }

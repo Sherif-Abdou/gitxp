@@ -78,10 +78,31 @@ animation: wiggle 0.5s ease-in-out;
     color: #f7debc;
 }
 
-/* .point_item {
-    display: flex;
-    flex-direction: row;
-} */
+.pointlog_container {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: #1f1c2c;
+    color: white;
+    font-family: 'Winky Rough', cursive;
+    box-shadow: 0 0 10px #00000050;
+}
+
+.pointlog_title {
+    font-size: 1.5rem;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #f7debc;
+}
+
+.pointlog_scrollbox {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
 
 .point_inner {
     font-weight: bold;
