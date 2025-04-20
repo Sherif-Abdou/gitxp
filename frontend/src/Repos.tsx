@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getRepos } from './api/api';
+import './Repos.css'
 
 type Repo = {
     name: string;
@@ -30,23 +31,23 @@ const RepoTab: React.FC<Props> = ({ username }) => {
     }, [username]);
 
     return (
-        <div>
-        <h2>Your Repositories</h2>
-        <ul>
+        <div className="repo-container">
+            <h2>Your Repositories</h2>
             {repos.map((repo) => (
-            <li key={repo.name}>
-            <strong>{repo.name}</strong><br />
-            ⭐ Stars: {repo.stars}<br />
-            🍴 Forks: {repo.forks}<br />
-            👀 Watchers: {repo.watchers}<br />
-            🐛 Open Issues: {repo.open_issues}<br />
-            👥 Contributors: {repo.contributors}<br />
-            🔁 Commits: {repo.commits}<br />
-            📦 PRs: {repo.prs}<br />
-            🧩 Issues: {repo.issues}
-          </li>
+                <div className="repo-box" key={repo.name}>
+                <strong>{repo.name}</strong>
+                <div className="repo-grid">
+                    <div>⭐ Stars: {repo.stars}</div>
+                    <div>🔁 Commits: {repo.commits}</div>
+                    <div>🧩 Issues: {repo.issues}</div>
+                    <div>🐛 Open Issues: {repo.open_issues}</div>
+                    <div>📦 PRs: {repo.prs}</div>
+                    <div>🍴 Forks: {repo.forks}</div>
+                    <div>👥 Contributors: {repo.contributors}</div>
+                    <div>👀 Watchers: {repo.watchers}</div>
+                </div>
+                </div>
             ))}
-        </ul>
         </div>
     );
 };
