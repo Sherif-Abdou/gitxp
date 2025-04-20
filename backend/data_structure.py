@@ -198,6 +198,44 @@ class Repo:
         # Combine all scores
         total_score = (average_commit_score * 0.7) + (pull_request_score * 0.2) + (issues_score * 0.1)
         return total_score
+    
+    def get_total_prs(self):
+        # Get pull request data from GitHub API
+        headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
+        prs_url = f"https://api.github.com/repos/{self.name}/pulls?state=all&per_page=5"
+        prs_response = requests.get(prs_url, headers=headers)
+        prs_data = prs_response.json()
+
+        return len(prs_data) # Number of pull requests
+    
+    def get_total_issues(self):
+        # Get issues data from GitHub API
+        headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
+        issues_url = f"https://api.github.com/repos/{self.name}/issues?state=all"
+        issues_response = requests.get(issues_url, headers=headers)
+        issues_data = issues_response.json()
+
+        return len(issues_data)
+    
+    def get_total_commits(self):
+        # Get commit data from GitHub API
+        return len(self.commits)
+    
+    def get_total_contributors(self):
+        # Get contributors data from GitHub API
+        return len(self.contributors)
+    
+    def get_stars(self):
+        return self.stars
+    
+    def get_forks(self):
+        return self.forks
+    
+    def get_watchers(self):
+        return self.watchers
+    
+    def get_open_issues(self):
+        return self.open_issues
 
 class Repos:
     def __init__(self):
