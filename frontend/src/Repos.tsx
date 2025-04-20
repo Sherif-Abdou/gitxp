@@ -12,7 +12,7 @@ type Repo = {
     commits: number;
     prs: number;
     issues: number;
-  };
+};
 
 type Props = {
     username: string;
@@ -20,19 +20,31 @@ type Props = {
 
 const RepoTab: React.FC<Props> = ({ username }) => {
     const [repos, setRepos] = useState<Repo[]>([]);
+    const [sortBy, setSortBy] = useState<string>('popularity'); // Default sorting is by popularity
+
+    const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortBy(event.target.value);
+    };
 
     useEffect(() => {
         async function fetchData() {
-            const result = await getRepos(username);
+            const result = await getRepos(username, sortBy);
             setRepos(result.repositories); // adjust for new payload shape
         }
     
         fetchData();
-    }, [username]);
+    }, [username, sortBy]);
 
     return (
         <div className="repo-container">
-            <h2>Your Repositories</h2>
+            <div className="repo-header">
+                <h2>Your Repositories</h2>
+                <select className="sort-dropdown" value={sortBy} onChange={handleSortChange}>
+                    <option value="popularity">Popularity</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="activity">Activity</option>
+                </select>
+            </div>
             {repos.map((repo) => (
                 <div className="repo-box" key={repo.name}>
                 <strong>{repo.name}</strong>
