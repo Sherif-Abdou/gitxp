@@ -41,19 +41,34 @@ export async function getLeaderboard(): Promise<[string, number][]> {
     }
 }
 
-export async function getRepos(user: string) : Promise<UserRepoResponse> {
+export async function getRepos(user: string, sorted: string = 'popularity') : Promise<UserRepoResponse> {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/users/${user}/repositories/info`);
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch repository data');
-      }
-  
-      console.log(response);
+        if (sorted === 'oldest') {
+            const response = await fetch(`http://127.0.0.1:5000/users/${user}/repositories/info/oldest`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch repository data');
+            }
+            console.log(response);
+            return await response.json();
+        }
+        if (sorted === 'activity') { /* Needs a new path */
+            const response = await fetch(`http://127.0.0.1:5000/users/${user}/repositories/info/activity`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch repository data');
+            }
+            console.log(response);
+            return await response.json();
+        }
+        // Default sort by popularity
+        const response = await fetch(`http://127.0.0.1:5000/users/${user}/repositories/info/popular`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch repository data');
+        }
+        console.log(response);
+        return await response.json();
 
-      return await response.json();
     } catch (error) {
-      console.error('Error getting repositories:', error);
-      return { user: "", repositories: [] };
+        console.error('Error getting repositories:', error);
+        return { user: "", repositories: [] };
     }
 }
