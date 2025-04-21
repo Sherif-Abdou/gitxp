@@ -33,7 +33,7 @@ const RepoTab: React.FC<Props> = ({ username }) => {
         }
     
         fetchData();
-    }, [username, sortBy]);
+    }, [username, sortBy]); // Re-fetches data when sort criteria or user changes
 
     return (
         <div className="repo-container">
