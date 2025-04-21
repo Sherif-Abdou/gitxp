@@ -45,7 +45,7 @@ const RepoTab: React.FC<Props> = ({ username }) => {
             </div>
         );
     }
-    
+
     return (
         <div className="repo-container">
             <div className="repo-header">
