@@ -61,6 +61,7 @@ def populate_user_if_needed(username):
 def hello_world():
     return "<p>Hello</p>"
 
+# Could be optimized to reduce API calls by checking ETag
 @app.route("/users/<username>/point_list", methods=['GET'])
 def get_point_sources(username):
     engine = db_engine
