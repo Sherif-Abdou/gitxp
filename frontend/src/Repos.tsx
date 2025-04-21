@@ -20,6 +20,7 @@ type Props = {
 
 const RepoTab: React.FC<Props> = ({ username }) => {
     const [repos, setRepos] = useState<Repo[]>([]);
+    const [loading, setLoading] = useState(true);
     const [sortBy, setSortBy] = useState<string>('popularity'); // Default sorting is by popularity
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -28,13 +29,23 @@ const RepoTab: React.FC<Props> = ({ username }) => {
 
     useEffect(() => {
         async function fetchData() {
+            setLoading(true);
             const result = await getRepos(username, sortBy);
             setRepos(result.repositories); // adjust for new payload shape
+            setLoading(false);
         }
-    
         fetchData();
-    }, [username, sortBy]);
+    }, [username, sortBy]); // Re-fetches data when sort criteria or user changes
 
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <h2>Gathering Info...</h2>
+                <div className="star-spinner">⭐</div>
+            </div>
+        );
+    }
+    
     return (
         <div className="repo-container">
             <div className="repo-header">
