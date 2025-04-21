@@ -106,10 +106,11 @@ class Repo:
 
             for commit in commits_data:
                 if commit["author"] is not None:
-                    if commit["author"]["login"] not in contributors_temp:
+                # if commit["author"] is not None:
+                    if "login" in commit["author"] and commit["author"]["login"] not in contributors_temp:
                         contributors_temp.add(commit["author"]["login"])
                 if commit["committer"] is not None:
-                    if commit["committer"]["login"] not in contributors_temp:
+                    if "login" in commit["committer"] and commit["committer"]["login"] not in contributors_temp:
                         contributors_temp.add(commit["committer"]["login"])
             self.contributors = list(contributors_temp)
 

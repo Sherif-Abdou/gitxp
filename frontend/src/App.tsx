@@ -17,11 +17,14 @@ function App() {
 
   useEffect(() => {
     if (isSignedIn && user) {
-      const name = user.username || user.firstName || "defaultName";
-      getPointEventsForUser(name).then(events => {
-        const total = events.reduce((sum, ev) => sum + ev.points, 0);
-        setTotalPoints(total);
-      });
+      const name = user.username || user.firstName;
+      if (name !== null) {
+      console.log(name);
+        getPointEventsForUser(name).then(events => {
+            const total = events.reduce((sum, ev) => sum + ev.points, 0);
+            setTotalPoints(total);
+        });
+      }
     }
   }, [isSignedIn, user]);
 

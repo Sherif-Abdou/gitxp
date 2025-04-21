@@ -15,11 +15,13 @@ export function PointView() {
 
 
     useEffect(() => {
-        const name = user?.username || user?.firstName || "defaultName";
-        getPointEventsForUser(name).then(data => {
-            console.log(data);
-            setData(data);
-        });
+        const name = user?.username || user?.firstName;
+        if (name) {
+            getPointEventsForUser(name).then(data => {
+                console.log(data);
+                setData(data);
+            });
+        }
     }, [isSignedIn, user]);
 
     if (!isLoaded) {
