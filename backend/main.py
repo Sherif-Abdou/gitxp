@@ -147,8 +147,7 @@ def get_user_repositories(username):
         }))
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-
-
+    
 def fetch_and_store_repo_info(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {
@@ -224,6 +223,288 @@ def fetch_and_store_repo_info(username):
     }))
     response.headers["Access-Control-Allow-Origin"] = "*"
 
+    return response
+    
+@app.route("/users/<username>/repositories/info/popular", methods=['GET'])
+def get_popular_repositories(username):
+    engine = db_engine
+    with Session(engine) as session:
+        popular_repos = session.query(database.PopularRepositoryInfo).all()
+
+        # If no popular repos or incomplete data, fetch and store
+        if not popular_repos or any(
+            repo.stars is None or repo.forks is None or repo.watchers is None or
+            repo.open_issues is None or repo.commits is None or
+            repo.contributors is None or repo.prs is None or repo.issues is None
+            for repo in popular_repos
+        ):
+            return fetch_and_store_popular_repos(username)
+
+        # Format and return
+        info_list = [{
+            "name": repo.name,
+            "stars": repo.stars,
+            "watchers": repo.watchers,
+            "open_issues": repo.open_issues,
+            "forks": repo.forks,
+            "contributors": repo.contributors,
+            "commits": repo.commits,
+            "prs": repo.prs,
+            "issues": repo.issues,
+        } for repo in popular_repos]
+
+        response = Response(json.dumps({
+            "user": username,
+            "repositories": info_list,
+        }))
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
+    
+def fetch_and_store_popular_repos(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    headers = {
+        "Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"
+    }
+
+    response = requests.get(url, headers=headers)    
+    data = response.json()
+
+    # Create repos class
+    repos = Repos()
+
+    for repo in data:
+        repos.add_repo(repo)
+
+    engine = db_engine
+    with Session(engine) as session:
+
+        ranked_repos = repos.get_popular_repos_ranked()
+
+        # Clear old data
+        session.query(database.PopularRepositoryInfo).delete()
+
+        for repo in ranked_repos:
+            popular = database.PopularRepositoryInfo(
+                name=repo.name,
+                stars=repo.get_stars() or 0,
+                forks=repo.get_forks() or 0,
+                watchers=repo.get_watchers() or 0,
+                open_issues=repo.get_open_issues() or 0,
+                contributors=repo.get_total_contributors() or 0,
+                commits=repo.get_total_commits() or 0,
+                prs=repo.get_total_prs() or 0,
+                issues=repo.get_total_issues() or 0
+            )
+            session.add(popular)
+
+        session.commit()
+
+    # Return the same response format
+    info_list = [{
+        "name": repo.name,
+        "stars": repo.get_stars() or 0,
+        "watchers": repo.get_watchers() or 0,
+        "open_issues": repo.get_open_issues() or 0,
+        "forks": repo.get_forks() or 0,
+        "contributors": repo.get_total_contributors() or 0,
+        "commits": repo.get_total_commits() or 0,
+        "prs": repo.get_total_prs() or 0,
+        "issues": repo.get_total_issues() or 0,
+    } for repo in ranked_repos]
+
+    response = Response(json.dumps({
+        "user": username,
+        "repositories": info_list,
+    }))
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+@app.route("/users/<username>/repositories/info/oldest", methods=['GET'])
+def get_oldest_repositories(username):
+    engine = db_engine
+    with Session(engine) as session:
+        oldest_repos = session.query(database.OldestRepositoryInfo).all()
+
+        # If no oldest repos or incomplete data, fetch and store
+        if not oldest_repos or any(
+            repo.stars is None or repo.forks is None or repo.watchers is None or
+            repo.open_issues is None or repo.commits is None or
+            repo.contributors is None or repo.prs is None or repo.issues is None
+            for repo in oldest_repos
+        ):
+            return fetch_and_store_oldest_repos(username)
+
+        # Format and return
+        info_list = [{
+            "name": repo.name,
+            "stars": repo.stars,
+            "watchers": repo.watchers,
+            "open_issues": repo.open_issues,
+            "forks": repo.forks,
+            "contributors": repo.contributors,
+            "commits": repo.commits,
+            "prs": repo.prs,
+            "issues": repo.issues,
+        } for repo in oldest_repos]
+
+        response = Response(json.dumps({
+            "user": username,
+            "repositories": info_list,
+        }))
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
+    
+def fetch_and_store_oldest_repos(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    headers = {
+        "Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"
+    }
+
+    response = requests.get(url, headers=headers)    
+    data = response.json()
+
+    # Create repos class
+    repos = Repos()
+
+    for repo in data:
+        repos.add_repo(repo)
+
+    engine = db_engine
+    with Session(engine) as session:
+
+        ranked_repos = repos.get_old_repos_ranked()
+
+        # Clear old data
+        session.query(database.OldestRepositoryInfo).delete()
+
+        for repo in ranked_repos:
+            oldest = database.OldestRepositoryInfo(
+                name=repo.name,
+                stars=repo.get_stars() or 0,
+                forks=repo.get_forks() or 0,
+                watchers=repo.get_watchers() or 0,
+                open_issues=repo.get_open_issues() or 0,
+                contributors=repo.get_total_contributors() or 0,
+                commits=repo.get_total_commits() or 0,
+                prs=repo.get_total_prs() or 0,
+                issues=repo.get_total_issues() or 0
+            )
+            session.add(oldest)
+
+        session.commit()
+
+    # Return the same response format
+    info_list = [{
+        "name": repo.name,
+        "stars": repo.get_stars() or 0,
+        "watchers": repo.get_watchers() or 0,
+        "open_issues": repo.get_open_issues() or 0,
+        "forks": repo.get_forks() or 0,
+        "contributors": repo.get_total_contributors() or 0,
+        "commits": repo.get_total_commits() or 0,
+        "prs": repo.get_total_prs() or 0,
+        "issues": repo.get_total_issues() or 0,
+    } for repo in ranked_repos]
+
+    response = Response(json.dumps({
+        "user": username,
+        "repositories": info_list,
+    }))
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
+@app.route("/users/<username>/repositories/info/activity", methods=['GET'])
+def get_activity_repositories(username):
+    engine = db_engine
+    with Session(engine) as session:
+        activity_repos = session.query(database.ActivityRepositoryInfo).all()
+
+        # If no oldest repos or incomplete data, fetch and store
+        if not activity_repos or any(
+            repo.stars is None or repo.forks is None or repo.watchers is None or
+            repo.open_issues is None or repo.commits is None or
+            repo.contributors is None or repo.prs is None or repo.issues is None
+            for repo in activity_repos
+        ):
+            return fetch_and_store_activity_repos(username)
+
+        # Format and return
+        info_list = [{
+            "name": repo.name,
+            "stars": repo.stars,
+            "watchers": repo.watchers,
+            "open_issues": repo.open_issues,
+            "forks": repo.forks,
+            "contributors": repo.contributors,
+            "commits": repo.commits,
+            "prs": repo.prs,
+            "issues": repo.issues,
+        } for repo in activity_repos]
+
+        response = Response(json.dumps({
+            "user": username,
+            "repositories": info_list,
+        }))
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
+    
+def fetch_and_store_activity_repos(username):
+    url = f"https://api.github.com/users/{username}/repos"
+    headers = {
+        "Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"
+    }
+
+    response = requests.get(url, headers=headers)    
+    data = response.json()
+
+    # Create repos class
+    repos = Repos()
+
+    for repo in data:
+        repos.add_repo(repo)
+
+    engine = db_engine
+    with Session(engine) as session:
+
+        ranked_repos = repos.get_active_repos_ranked()
+
+        # Clear old data
+        session.query(database.ActivityRepositoryInfo).delete()
+
+        for repo in ranked_repos:
+            activity = database.ActivityRepositoryInfo(
+                name=repo.name,
+                stars=repo.get_stars() or 0,
+                forks=repo.get_forks() or 0,
+                watchers=repo.get_watchers() or 0,
+                open_issues=repo.get_open_issues() or 0,
+                contributors=repo.get_total_contributors() or 0,
+                commits=repo.get_total_commits() or 0,
+                prs=repo.get_total_prs() or 0,
+                issues=repo.get_total_issues() or 0
+            )
+            session.add(activity)
+
+        session.commit()
+
+    # Return the same response format
+    info_list = [{
+        "name": repo.name,
+        "stars": repo.get_stars() or 0,
+        "watchers": repo.get_watchers() or 0,
+        "open_issues": repo.get_open_issues() or 0,
+        "forks": repo.get_forks() or 0,
+        "contributors": repo.get_total_contributors() or 0,
+        "commits": repo.get_total_commits() or 0,
+        "prs": repo.get_total_prs() or 0,
+        "issues": repo.get_total_issues() or 0,
+    } for repo in ranked_repos]
+
+    response = Response(json.dumps({
+        "user": username,
+        "repositories": info_list,
+    }))
+    response.headers["Access-Control-Allow-Origin"] = "*"
     return response
 
 

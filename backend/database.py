@@ -68,6 +68,54 @@ class UserRepository(Base):
     user: Mapped["User"] = relationship(back_populates="repositories_info")
     repository: Mapped["RepositoryInfo"] = relationship(back_populates="users")
 
+# Popular repos
+class PopularRepositoryInfo(Base):
+    __tablename__ = "popular_repositories_info"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(70))
+    stars: Mapped[int] = mapped_column(Integer())
+    forks: Mapped[int] = mapped_column(Integer())
+    watchers: Mapped[int] = mapped_column(Integer())
+    open_issues: Mapped[int] = mapped_column(Integer())
+
+    contributors: Mapped[int] = mapped_column(Integer(), default=0)
+    commits: Mapped[int] = mapped_column(Integer(), default=0)
+    prs: Mapped[int] = mapped_column(Integer(), default=0)
+    issues: Mapped[int] = mapped_column(Integer(), default=0)
+
+# Oldest repos
+class OldestRepositoryInfo(Base):
+    __tablename__ = "oldest_repositories_info"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(70))
+    stars: Mapped[int] = mapped_column(Integer())
+    forks: Mapped[int] = mapped_column(Integer())
+    watchers: Mapped[int] = mapped_column(Integer())
+    open_issues: Mapped[int] = mapped_column(Integer())
+
+    contributors: Mapped[int] = mapped_column(Integer(), default=0)
+    commits: Mapped[int] = mapped_column(Integer(), default=0)
+    prs: Mapped[int] = mapped_column(Integer(), default=0)
+    issues: Mapped[int] = mapped_column(Integer(), default=0)
+
+# Active repos
+class ActivityRepositoryInfo(Base):
+    __tablename__ = "activity_repositories_info"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(70))
+    stars: Mapped[int] = mapped_column(Integer())
+    forks: Mapped[int] = mapped_column(Integer())
+    watchers: Mapped[int] = mapped_column(Integer())
+    open_issues: Mapped[int] = mapped_column(Integer())
+
+    contributors: Mapped[int] = mapped_column(Integer(), default=0)
+    commits: Mapped[int] = mapped_column(Integer(), default=0)
+    prs: Mapped[int] = mapped_column(Integer(), default=0)
+    issues: Mapped[int] = mapped_column(Integer(), default=0)
+
 
 # Represents a point source in the database
 # Every source of points is stored individually so points over time can be calculated

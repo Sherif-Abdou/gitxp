@@ -324,5 +324,5 @@ class Repos:
     
     def get_active_repos_ranked(self):
         # Sort repos by activity score in descending order
-        sorted_repos = sorted(self.repos, key=lambda x: x.activity_score, reverse=True)
+        sorted_repos = sorted(self.repos, key=lambda x: x.get_activity_score(), reverse=True)
         return sorted_repos
