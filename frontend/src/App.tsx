@@ -33,11 +33,17 @@ function App() {
   };
 
   const renderContent = () => {
+    if (!user) {
+      return <PointView />;
+    }
+    
+    const username = user.username!;
+
     switch (activeNav) {
       case 'home':
         return <PointView />;
       case 'repos':
-        return <ReposTab username={user?.username || 'defaultName'} />;
+        return <ReposTab username={username}/>;
       case 'leaderboard':
         return <Leaderboard />;
       default:
