@@ -11,6 +11,7 @@ export function Leaderboard() {
       try {
         setIsLoading(true);
         const data = await getLeaderboard();
+        console.log(data);
         setLeaderboardData(data);
         setError(null);
       } catch (err) {
