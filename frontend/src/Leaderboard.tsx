@@ -39,7 +39,7 @@ export function Leaderboard() {
             <div className="leaderboard-header">
               <div className="rank-column">Rank</div>
               <div className="name-column">Name</div>
-              <div className="score-column">XP</div>
+              <div className="score-column">⭐</div>
             </div>
             
             {leaderboardData.map(([name, score], index) => (
