@@ -14,12 +14,13 @@ function App() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [activeNav, setActiveNav] = useState('home');
 
-
+/* This function gets the point events for user */
   useEffect(() => {
     if (isSignedIn && user) {
       const name = user.username || user.firstName;
       if (name !== null) {
       console.log(name);
+        /* set total points variable based on the events */
         getPointEventsForUser(name).then(events => {
             const total = events.reduce((sum, ev) => sum + ev.points, 0);
             setTotalPoints(total);
@@ -28,10 +29,12 @@ function App() {
     }
   }, [isSignedIn, user]);
 
+  /* Handle page navigation */
   const handleNavClick = (navItem: SetStateAction<string>) => {
     setActiveNav(navItem);
   };
 
+  /* Show point view if user is not signed in */
   const renderContent = () => {
     if (!user) {
       return <PointView />;
@@ -39,6 +42,7 @@ function App() {
     
     const username = user.username!;
 
+    /* the various pages */
     switch (activeNav) {
       case 'home':
         return <PointView />;

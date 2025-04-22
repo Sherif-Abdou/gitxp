@@ -46,6 +46,7 @@ def find_repositories_for(user):
         result = session.execute(stmt).all()
         return result
 
+# Populate the user if they do not exist in the database
 def populate_user_if_needed(username):
     engine = db_engine
     with Session(engine) as session:
@@ -69,8 +70,11 @@ def get_point_sources(username):
     if len(repos) > 0:
         database.load_repos_to_db(engine, repos)
 
+    # Populate users if needed
     populate_user_if_needed(username)
     point_sources = find_point_sources_for(username)
+
+    # Crerate a table
     table = [
             {"points": round(100 * item[0].points * points.time_attentuation(points.days_since(item[0].time))), 
              "point_type": item[0].point_type,
@@ -81,7 +85,7 @@ def get_point_sources(username):
 
     return response
     
-
+# Route the user to the point sources
 @app.route("/users/<username>/total_points", methods=['GET'])
 def get_user_points(username):
     point_sources = find_point_sources_for(username)
@@ -96,6 +100,7 @@ def get_user_points(username):
 
     return response
 
+# Route the user to the repositories (specific information)
 @app.route("/users/<username>/repositories/info", methods=['GET'])
 def get_user_repositories(username):
     engine = db_engine
@@ -105,6 +110,7 @@ def get_user_repositories(username):
         if not user or len(user.repositories_info) == 0:
             return fetch_and_store_repo_info(username)
 
+        # If the data isn't in the table then call fetch_and_store_repo_info to make it
         incomplete_repos = []
         for user_repo in user.repositories_info:
             repo = user_repo.repository
@@ -148,7 +154,8 @@ def get_user_repositories(username):
         }))
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-    
+
+# Used to populate the database with the repository information of the user
 def fetch_and_store_repo_info(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {
@@ -168,7 +175,7 @@ def fetch_and_store_repo_info(username):
 
     repos_list = repos.get_repos()
 
-    # --- ADDED: Start DB session ---
+    # Start session and add user if not exists
     engine = db_engine
     with Session(engine) as session:
         user = session.query(database.User).filter_by(name=username).first()
@@ -176,10 +183,9 @@ def fetch_and_store_repo_info(username):
             user = database.User(name=username, github_username=username, clerk_hash="")
             session.add(user)
             session.commit()
-    # --- END DB setup ---
 
+    # Go through each repo and add the information
     for repo in repos_list:
-        # --- ADDED: Store repo metadata ---
         with Session(engine) as session:
             existing_repo = session.query(database.RepositoryInfo).filter_by(name=repo.name).first()
             if not existing_repo:
@@ -204,7 +210,6 @@ def fetch_and_store_repo_info(username):
             if not link:
                 session.add(database.UserRepository(user_id=user.id, repo_id=existing_repo.id))
                 session.commit()
-        # --- END DB insert ---
 
         info_list.append({
             "name": repo.name,
@@ -226,6 +231,7 @@ def fetch_and_store_repo_info(username):
 
     return response
     
+# Route for popular repositories ranking
 @app.route("/users/<username>/repositories/info/popular", methods=['GET'])
 def get_popular_repositories(username):
     engine = db_engine
@@ -260,7 +266,8 @@ def get_popular_repositories(username):
         }))
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-    
+
+# Get popular repositories from the database if they do not exist or are incomplete
 def fetch_and_store_popular_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {
@@ -320,6 +327,7 @@ def fetch_and_store_popular_repos(username):
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
 
+# Route for oldest repositories ranking
 @app.route("/users/<username>/repositories/info/oldest", methods=['GET'])
 def get_oldest_repositories(username):
     engine = db_engine
@@ -354,7 +362,8 @@ def get_oldest_repositories(username):
         }))
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-    
+
+# Get oldest repositories from the database if they do not exist or are incomplete
 def fetch_and_store_oldest_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {
@@ -414,6 +423,7 @@ def fetch_and_store_oldest_repos(username):
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
 
+# Route for active repositories ranking
 @app.route("/users/<username>/repositories/info/activity", methods=['GET'])
 def get_activity_repositories(username):
     engine = db_engine
@@ -448,7 +458,8 @@ def get_activity_repositories(username):
         }))
         response.headers["Access-Control-Allow-Origin"] = "*"
         return response
-    
+
+# Get active repositories from the database if they do not exist or are incomplete 
 def fetch_and_store_activity_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {
@@ -509,11 +520,13 @@ def fetch_and_store_activity_repos(username):
     return response
 
 
-
+# Route for user repositories with points
 @app.route("/users/<username>/repositories", methods=['GET'])
 def get_user_repositories_info(username):
     repositories = find_repositories_for(username)
     point_table = dict()
+
+    # Calculate points on the fly
     for (repository,) in repositories:
         point_table[repository.name] = points.calculate_points(map(lambda a: a[0], find_point_sources_for(username, repository.name)))
 
@@ -525,6 +538,7 @@ def get_user_repositories_info(username):
 
     return response
 
+# Route for all repositories
 @app.route("/repositories", methods=['GET'])
 def get_repository_list():
     engine = db_engine
@@ -540,6 +554,7 @@ def get_repository_list():
 
     return response
 
+# Route for leaderboard
 @app.route("/leaderboard", methods=['GET'])
 def get_leaderboard():
     engine = db_engine
@@ -548,6 +563,7 @@ def get_leaderboard():
 
     data = [(a, b) for ((a,), b) in leaderboard]
 
+    # Sort the users based on total number of points
     data.sort(key=lambda a: a[1], reverse=True)
 
     response = Response(json.dumps(data));

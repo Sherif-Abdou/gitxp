@@ -13,7 +13,7 @@ export function PointView() {
         greetings[Math.floor(Math.random() * greetings.length)]
     );
 
-
+    // Get point events if the user exists and is signed in
     useEffect(() => {
         const name = user?.username || user?.firstName;
         if (name) {
@@ -24,10 +24,12 @@ export function PointView() {
         }
     }, [isSignedIn, user]);
 
+    // Loading state
     if (!isLoaded) {
         return <div>Loading...</div>; // Clerk loading
     }
 
+    // If the user is not signed in, show a welcome message
     if (!isSignedIn) {
         return (
         <div className="welcome_container">
@@ -39,6 +41,7 @@ export function PointView() {
 
     const name = user.firstName?.trim() || user.username?.trim() || "Coder"; // username fallback chain
 
+    // Map over the data to create table rows
     const items = data.map(item => (
     <tr className="point_item">
         <td className="point_number"><div className="point_inner">{item.points}</div></td>

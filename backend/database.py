@@ -31,6 +31,7 @@ class User(Base):
     
     repositories_info: Mapped[List["UserRepository"]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
+# Represents a repository in the database
 class Repository(Base):
     __tablename__ = "repositories"
 
@@ -41,6 +42,7 @@ class Repository(Base):
     watchers: Mapped[int] = mapped_column(Integer())
     open_issues: Mapped[int] = mapped_column(Integer())
 
+# Repository information for a user (a lot more specific than the table above)
 class RepositoryInfo(Base):
     __tablename__ = "repositories_info"
 
@@ -58,6 +60,7 @@ class RepositoryInfo(Base):
 
     users: Mapped[List["UserRepository"]] = relationship(back_populates="repository", cascade="all, delete-orphan")
 
+# Associates a user with a repository
 class UserRepository(Base):
     __tablename__ = "user_repository"
 
@@ -157,6 +160,7 @@ class PointSource(Base):
 #         session.add_all([point_source_a, point_source_b])
 #         session.commit()
 
+# Return the type of point source
 def get_point_type(point):
     if isinstance(point, points.CommitEvent):
         return "Commit"
@@ -170,6 +174,7 @@ def get_point_type(point):
         return "PR"
     return "Other"
 
+# Load repositories into the database
 def load_repos_to_db(engine, repos):
     with Session(engine) as session:
         to_add = []
@@ -190,6 +195,7 @@ def load_repos_to_db(engine, repos):
         session.add_all(to_add)
         session.commit()
 
+# Load events into the database
 def load_events_to_db(engine, username, events):
     with Session(engine) as session:
         user = session.execute(select(User).where(User.name == username)).first()
@@ -220,6 +226,7 @@ def load_events_to_db(engine, username, events):
         # Commit after adding all PointSource objects
         session.commit()
 
+# Get a list of the repos
 def get_repo_list(engine):
     with Session(engine) as session:
         stmt = select(Repository)
@@ -227,6 +234,7 @@ def get_repo_list(engine):
 
         return items
 
+# Helper to find tthe point sources (for categorization)
 def find_point_sources_for(engine, user, repository=None):
     with Session(engine, expire_on_commit=False) as session:
         stmt = select(PointSource).join(PointSource.user).join(PointSource.repo).where(User.name == user)
@@ -236,6 +244,7 @@ def find_point_sources_for(engine, user, repository=None):
         result = session.execute(stmt).all()
         return result
 
+# Gets points per user to be displayed on the leaderboard
 def point_leaderboard(engine):
     with Session(engine) as session:
         users = session.execute(select(User.name)).all()
@@ -246,6 +255,7 @@ def point_leaderboard(engine):
             user_points.append(total_points)
         return list(zip(users, user_points))
 
+# Iinitializes the database connection
 def init_db(echo=True):
     load_dotenv()
     db_url = getenv("POSTGRES_DB")

@@ -68,6 +68,7 @@ headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"
 #             point_events.append(issue);
 #     return point_events
 
+# Test file to get user events
 def get_user_events(username):
     url = f"https://api.github.com/users/{username}/events"
     response = requests.get(url, headers=headers)
@@ -75,12 +76,14 @@ def get_user_events(username):
 
     point_events = []
     
+    # Go through events and print each repo data (time, name, etc.)
     for event in data:
         event_type = event["type"]
         repo_name = event["repo"]["name"]
         date_time = event["created_at"][:-1].split("T")
         time = datetime.strptime(f"{str(date_time[1])} {str(date_time[0])}","%H:%M:%S %Y-%m-%d") 
 
+        # If the event is a push event, get the commit data
         if event["type"] == "PushEvent":
             for commit in event["payload"]["commits"]:
                 commit_url = commit["url"]
@@ -106,6 +109,7 @@ def get_user_events(username):
                 commit_event.repo = repo_name
                 commit_event.timestamp = time
                 point_events.append(commit_event)
+        # If the event is an issue event or an issue comment event, create an issue event
         elif event["type"] == "IssuesEvent":
             issue = points.OpenIssueEvent()
             issue.repo = repo_name
@@ -128,6 +132,7 @@ def get_user_events(username):
             point_events.append(pr);
     return point_events
 
+# Get the repo information based on a user's repos (FOR TESTING ONLY)
 def get_repos(username):
     url = f"https://api.github.com/users/{username}/repos"
     headers = {"Authorization": f"token {os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')}"}
@@ -136,6 +141,7 @@ def get_repos(username):
 
     repositories = []
 
+    # Got through each repo and get the name, stars, forks, watchers, and open issues
     for repo in data:
         name = repo["name"]
         stars = int(repo["stargazers_count"])

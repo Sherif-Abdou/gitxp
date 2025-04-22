@@ -3,6 +3,7 @@ from typing_extensions import override
 from datetime import datetime
 from math import log2
 
+# This class is the base class for all Github events.
 class GithubEvent():
     def __init__(self):
         self.timestamp = datetime.now()
@@ -11,6 +12,7 @@ class GithubEvent():
     def generate_points(self):
         return 0.0
 
+# Commit, store additions and deletions and generate points from them
 class CommitEvent(GithubEvent):
     def __init__(self, additions, deletions):
         super().__init__()
@@ -20,6 +22,7 @@ class CommitEvent(GithubEvent):
     def generate_points(self):
         return 0.75 * log2(max(self.__additions, 1)) + 0.25 * log2(max(self.__deletions, 1))
 
+# Open issues, just return 1
 class OpenIssueEvent(GithubEvent):
     def __init__(self):
         pass
@@ -27,6 +30,7 @@ class OpenIssueEvent(GithubEvent):
     def generate_points(self):
         return 1
 
+# Open PR, just return 8
 class OpenPullRequestEvent(GithubEvent):
     def __init__(self):
         pass
@@ -34,6 +38,7 @@ class OpenPullRequestEvent(GithubEvent):
     def generate_points(self):
         return 8
 
+# Create repo, just return 4
 class CreateRepoEvent(GithubEvent):
     def __init__(self):
         super().__init__()
@@ -41,6 +46,7 @@ class CreateRepoEvent(GithubEvent):
     def generate_points(self):
         return 4
 
+# Close PR, return based on additions and deletions
 class ClosePullRequestEvent(GithubEvent):
     def __init__(self, additions, deletions):
         self.__additions = additions
