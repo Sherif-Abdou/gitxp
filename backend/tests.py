@@ -14,17 +14,19 @@ class BackendMethods(unittest.TestCase):
             self.assertNotEqual(len(items), 0)
 
 
-
+    # Test if commit points are calculated correctly
     def test_commit_points(self):
         commit_source = CommitEvent(16, 2)
         points = commit_source.generate_points()
         self.assertEqual(points, 3.25)
 
+    # Test if pr points are calculated correctly
     def test_pr_points(self):
         commit_source = ClosePullRequestEvent(16, 2)
         points = commit_source.generate_points()
         self.assertEqual(points, 16.25)
 
+    # Test if issue points are calculated correctly
     def test_issue_points(self):
         issue_source = OpenIssueEvent()
         self.assertEqual(issue_source.generate_points(), 1)

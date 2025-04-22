@@ -23,10 +23,12 @@ const RepoTab: React.FC<Props> = ({ username }) => {
     const [loading, setLoading] = useState(true);
     const [sortBy, setSortBy] = useState<string>('popularity'); // Default sorting is by popularity
 
+    // Change sort based on whatever comes out of the backend
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSortBy(event.target.value);
     };
 
+    // Set the repos
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
@@ -37,6 +39,7 @@ const RepoTab: React.FC<Props> = ({ username }) => {
         fetchData();
     }, [username, sortBy]); // Re-fetches data when sort criteria or user changes
 
+    // Loading state
     if (loading) {
         return (
             <div className="loading-container">

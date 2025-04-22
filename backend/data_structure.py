@@ -279,6 +279,7 @@ class Repos:
         # Set date to UTC and convert to Unix timestamp
         last_updated_timestamp = last_updated.replace(tzinfo=timezone.utc).timestamp()
 
+        # Create the repo object and add it to the list
         repo_object =  Repo(repo["full_name"],
                             repo["description"],
                             repo["stargazers_count"],
@@ -293,21 +294,25 @@ class Repos:
         self.repos.append(repo_object)
 
     def get_repos(self):
+        # Get all repos
         return self.repos
 
     def get_repo_by_name(self, name):
+        # Get repo by name
         for repo in self.repos:
             if repo.name == name:
                 return repo
         return None
 
     def get_all_contributors(self):
+        # Get all contributors from all repos
         contributors = set()
         for repo in self.repos:
             contributors.update(repo.contributors)
         return list(contributors)
     
     def get_all_commits(self):
+        # Get all commits from all repos
         all_commits = []
         for repo in self.repos:
             all_commits.extend(repo.commits)

@@ -7,6 +7,8 @@ export function Leaderboard() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    /* Fetch leaderboard else show loading spinner */
+    /* Have catch in case there is error to show the error message */
     const fetchLeaderboard = async () => {
       try {
         setIsLoading(true);
@@ -22,6 +24,7 @@ export function Leaderboard() {
       }
     };
 
+    /* Fetch the leaderboard from the backend */
     fetchLeaderboard();
   }, []);
 

@@ -3,6 +3,8 @@ export interface Event {
     point_type: string,
     repository: string,
 }
+
+/* This interface is used to represent the information of a repository. Makes life simpler */
 export interface RepoInfo {
     name: string;
     stars: number;
@@ -20,7 +22,7 @@ export interface UserRepoResponse {
     repositories: RepoInfo[];
 }
 
-
+/* This function gets the point events for user */
 export async function getPointEventsForUser(user: string): Promise<Event[]> {
     try {
         const data = await fetch(`http://127.0.0.1:5000/users/${user}/point_list`);
@@ -31,6 +33,7 @@ export async function getPointEventsForUser(user: string): Promise<Event[]> {
     }
 }
 
+/* This function gets leaderboard stats */
 export async function getLeaderboard(): Promise<[string, number][]> {
     try {
         const data = await fetch(`http://127.0.0.1:5000/leaderboard`);
@@ -41,6 +44,7 @@ export async function getLeaderboard(): Promise<[string, number][]> {
     }
 }
 
+/* This function gets repos based on rankings */
 export async function getRepos(user: string, sorted: string = 'popularity') : Promise<UserRepoResponse> {
     try {
         if (sorted === 'oldest') {
